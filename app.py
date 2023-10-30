@@ -1,6 +1,8 @@
 import streamlit as st
+from streamlit.components.v1 import html
 import pandas as pd
 import json
+import streamlit_vizzu
 
 
 class DataFrameParser:
@@ -143,7 +145,35 @@ class ChartBuilder:
         if st.button("Show Charts"):
             if self._presets and self._key:
                 if self._key in self._presets:
-                    st.write(self._presets[self._key])
+                    self._add_charts()
+
+    def _add_charts(self):
+        data = streamlit_vizzu.Data()
+        data.add_df(self._df)
+        for index, raw_config in enumerate(self._presets[self._key]):
+            config = {}
+            for key, value in raw_config.items():
+                if key != "chart" and value is not None:
+                    if isinstance(value, list):
+                        value = [self._replace_config(v) for v in value]
+                    else:
+                        value = self._replace_config(value)
+                    config[key] = value
+            st.write(raw_config["chart"])
+            st.write(f"chart.animate(data, Config({config}))")
+            chart = streamlit_vizzu.VizzuChart(
+                height=380, key=f"vizzu_{self._key}_{index}"
+            )
+            chart.animate(data, streamlit_vizzu.Config(config))
+            chart.show()
+
+    def _replace_config(self, value):
+        if isinstance(value, str):
+            value = value.replace("Cat1", self._categories1 or "")
+            value = value.replace("Cat2", self._categories2 or "")
+            value = value.replace("Value1", self._values1 or "")
+            value = value.replace("Value2", self._values2 or "")
+        return value
 
 
 class App:
