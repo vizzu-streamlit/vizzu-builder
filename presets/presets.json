@@ -1,0 +1,716 @@
+{
+    "Cat1, Value1": [
+        {
+            "chart": "Column Chart",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": "Cat1",
+            "y": "Value1",
+            "color": null,
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Waterfall",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": "Cat1",
+            "y": "Value1",
+            "color": "Value1",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Bar Chart",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": "Value1",
+            "y": "Cat1",
+            "color": null,
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "vertical"
+        },
+        {
+            "chart": "Lollipop",
+            "coordSystem": "cartesian",
+            "geometry": "circle",
+            "x": "Cat1",
+            "y": "Value1",
+            "color": null,
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Area Chart",
+            "coordSystem": "cartesian",
+            "geometry": "area",
+            "x": "Cat1",
+            "y": "Value1",
+            "color": null,
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Line Chart ",
+            "coordSystem": "cartesian",
+            "geometry": "line",
+            "x": "Cat1",
+            "y": "Value1",
+            "color": null,
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Pie Chart",
+            "coordSystem": "polar",
+            "geometry": "rectangle",
+            "x": [
+                "Cat1",
+                "Value1"
+            ],
+            "y": null,
+            "color": "Cat1",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "vertical"
+        },
+        {
+            "chart": "Polar Column Chart",
+            "coordSystem": "polar",
+            "geometry": "rectangle",
+            "x": "Cat1",
+            "y": "Value1",
+            "color": null,
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Radial Bar Chart",
+            "coordSystem": "polar",
+            "geometry": "rectangle",
+            "x": "Value1",
+            "y": "Cat1",
+            "color": null,
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "vertical"
+        },
+        {
+            "chart": "Donut Chart",
+            "coordSystem": "polar",
+            "geometry": "rectangle",
+            "x": [
+                "Cat1",
+                "Value1"
+            ],
+            "y": null,
+            "color": "Cat1",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "vertical"
+        },
+        {
+            "chart": "Treemap",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": null,
+            "y": null,
+            "color": "Cat1",
+            "lightness": null,
+            "size": [
+                "Cat1",
+                "Value1"
+            ],
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": null
+        },
+        {
+            "chart": "Bubble Chart",
+            "coordSystem": "cartesian",
+            "geometry": "circle",
+            "x": null,
+            "y": null,
+            "color": "Cat1",
+            "lightness": null,
+            "size": "Value1",
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": null
+        }
+    ],
+    "Cat1, Value1, Value2": [
+        {
+            "chart": "Scatter Plot",
+            "coordSystem": "cartesian",
+            "geometry": "circle",
+            "x": "Value1",
+            "y": "Value2",
+            "color": null,
+            "lightness": null,
+            "size": null,
+            "noop": "Cat1",
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Variable Radius Pie Chart",
+            "coordSystem": "polar",
+            "geometry": "rectangle",
+            "x": [
+                "Cat1",
+                "Value1"
+            ],
+            "y": "Value2",
+            "color": "Cat1",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Polar Scatter",
+            "coordSystem": "polar",
+            "geometry": "circle",
+            "x": "Value1",
+            "y": "Value2",
+            "color": null,
+            "lightness": null,
+            "size": null,
+            "noop": "Cat1",
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        }
+    ],
+    "Cat1, Cat2, Value1": [
+        {
+            "chart": "Grouped Column Chart",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": [
+                "Cat1",
+                "Cat2"
+            ],
+            "y": "Value1",
+            "color": "Cat1",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Stacked Column Chart",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": "Cat1",
+            "y": [
+                "Cat2",
+                "Value1"
+            ],
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Splitted Column Chart",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": "Cat1",
+            "y": [
+                "Cat2",
+                "Value1"
+            ],
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": true,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "100% Stacked Column Chart",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": "Cat1",
+            "y": [
+                "Cat2",
+                "Value1"
+            ],
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": "stretch",
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Grouped Bar Chart",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": "Value1",
+            "y": [
+                "Cat1",
+                "Cat2"
+            ],
+            "color": "Cat1",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "vertical"
+        },
+        {
+            "chart": "Stacked Bar Chart",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": [
+                "Cat2",
+                "Value1"
+            ],
+            "y": "Cat1",
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "vertical"
+        },
+        {
+            "chart": "Splitted Bar Chart",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": [
+                "Cat2",
+                "Value1"
+            ],
+            "y": "Cat1",
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": true,
+            "align": null,
+            "orientation": "vertical"
+        },
+        {
+            "chart": "100% Stacked Bar Chart",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": [
+                "Cat2",
+                "Value1"
+            ],
+            "y": "Cat1",
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": "stretch",
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Correlogram",
+            "coordSystem": "cartesian",
+            "geometry": "circle",
+            "x": "Cat1",
+            "y": "Cat2",
+            "color": "Value1",
+            "lightness": null,
+            "size": "Value1",
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Stacked Area Chart",
+            "coordSystem": "cartesian",
+            "geometry": "area",
+            "x": "Cat1",
+            "y": [
+                "Cat2",
+                "Value1"
+            ],
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "100% Stacked Area Chart",
+            "coordSystem": "cartesian",
+            "geometry": "area",
+            "x": "Cat1",
+            "y": [
+                "Cat2",
+                "Value1"
+            ],
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": "stretch",
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Splitted Area Chart - Ridgeline Plot",
+            "coordSystem": "cartesian",
+            "geometry": "area",
+            "x": "Cat1",
+            "y": [
+                "Cat2",
+                "Value1"
+            ],
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": true,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Stream Graph",
+            "coordSystem": "cartesian",
+            "geometry": "area",
+            "x": "Cat1",
+            "y": [
+                "Cat2",
+                "Value1"
+            ],
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": "center",
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Stream Graph Vertical",
+            "coordSystem": "cartesian",
+            "geometry": "area",
+            "x": [
+                "Cat2",
+                "Value1"
+            ],
+            "y": "Cat1",
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": "center",
+            "orientation": "vertical"
+        },
+        {
+            "chart": "Violin Graph",
+            "coordSystem": "cartesian",
+            "geometry": "area",
+            "x": "Cat1",
+            "y": [
+                "Cat2",
+                "Value1"
+            ],
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": true,
+            "align": "center",
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Violin Graph Vertical",
+            "coordSystem": "cartesian",
+            "geometry": "area",
+            "x": [
+                "Cat2",
+                "Value1"
+            ],
+            "y": "Cat1",
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": true,
+            "align": "center",
+            "orientation": "vertical"
+        },
+        {
+            "chart": "Line Chart",
+            "coordSystem": "cartesian",
+            "geometry": "line",
+            "x": "Cat1",
+            "y": "Value1",
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Vertical Line Chart",
+            "coordSystem": "cartesian",
+            "geometry": "line",
+            "x": "Value1",
+            "y": "Cat1",
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "vertical"
+        },
+        {
+            "chart": "Polar Stacked Column Chart",
+            "coordSystem": "polar",
+            "geometry": "rectangle",
+            "x": "Cat1",
+            "y": [
+                "Cat2",
+                "Value1"
+            ],
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Polar Area Chart",
+            "coordSystem": "polar",
+            "geometry": "rectangle",
+            "x": "Cat1",
+            "y": [
+                "Cat2",
+                "Value1"
+            ],
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Radial Stacked Bar Chart",
+            "coordSystem": "polar",
+            "geometry": "rectangle",
+            "x": [
+                "Cat2",
+                "Value1"
+            ],
+            "y": "Cat1",
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "vertical"
+        },
+        {
+            "chart": "Nested Donut Chart",
+            "coordSystem": "polar",
+            "geometry": "rectangle",
+            "x": [
+                "Cat1",
+                "Value1"
+            ],
+            "y": "Cat2",
+            "color": "Cat1",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": "stretch",
+            "orientation": "vertical"
+        },
+        {
+            "chart": "Polar Stacked Area",
+            "coordSystem": "polar",
+            "geometry": "area",
+            "x": "Cat1",
+            "y": [
+                "Cat2",
+                "Value1"
+            ],
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": "min",
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Heat Map Gradient",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": "Cat1",
+            "y": "Cat2",
+            "color": "Value1",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Heat Map",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": "Cat1",
+            "y": "Cat2",
+            "color": null,
+            "lightness": "Value1",
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Stacked Bubble Chart",
+            "coordSystem": "cartesian",
+            "geometry": "circle",
+            "x": null,
+            "y": null,
+            "color": "Cat1",
+            "lightness": null,
+            "size": [
+                "Cat2",
+                "Value1"
+            ],
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": null
+        }
+    ],
+    "Cat1, Cat2, Value1, Value2": [
+        {
+            "chart": "Stacked Mekko Chart",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": [
+                "Cat1",
+                "Value1"
+            ],
+            "y": [
+                "Cat2",
+                "Value2"
+            ],
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Marimekko Chart",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": [
+                "Cat1",
+                "Value1"
+            ],
+            "y": [
+                "Cat2",
+                "Value2"
+            ],
+            "color": "Cat2",
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": "stretch",
+            "orientation": "horizontal"
+        },
+        {
+            "chart": "Stacked Treemap",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": null,
+            "y": null,
+            "color": "Cat1",
+            "lightness": "Value2",
+            "size": [
+                "Cat2",
+                "Value1"
+            ],
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": null
+        }
+    ]
+}
