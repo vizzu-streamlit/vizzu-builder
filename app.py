@@ -57,6 +57,12 @@ class CsvFileUploader:
     def df(self):
         return self._df
 
+    @property
+    def file_name(self):
+        if self._csv_file:
+            return self._csv_file.name
+        return None
+
     def _add_title(self):
         st.subheader("Create Data")
 
@@ -98,7 +104,8 @@ class ChartBuilder:
         "Cat1, Cat2, Value1, Value2",
     ]
 
-    def __init__(self, df):
+    def __init__(self, file_name, df):
+        self._file_name = file_name
         self._df = df
         self._cat1, self._cat2 = None, None
         self._selected_cat1, self._selected_cat2 = None, None
@@ -192,23 +199,50 @@ class ChartBuilder:
         data = streamlit_vizzu.Data()
         data.add_df(self._df)
         for index, raw_config in enumerate(self._presets[self._key]):
-            config = {}
-            for key, value in raw_config.items():
-                if key != "chart" and value is not None:
-                    if isinstance(value, list):
-                        value = [self._replace_config(v) for v in value]
-                    else:
-                        value = self._replace_config(value)
-                    config[key] = value
-            if self._label is not None:
-                config["label"] = self._label
-            st.caption(raw_config["chart"])
-            st.write(f"chart.animate(data, Config({config}))")
-            chart = streamlit_vizzu.VizzuChart(
-                height=380, key=f"vizzu_{self._key}_{index}"
+            config = self._process_raw_config(raw_config)
+            self._add_chart_title(raw_config)
+            self._add_chart(index, data, config)
+            self._add_show_code_button(config)
+
+    def _process_raw_config(self, raw_config):
+        config = {}
+        for key, value in raw_config.items():
+            if key != "chart" and value is not None:
+                if isinstance(value, list):
+                    value = [self._replace_config(v) for v in value]
+                else:
+                    value = self._replace_config(value)
+                config[key] = value
+        if self._label is not None:
+            config["label"] = self._label
+        return config
+
+    def _add_chart_title(self, raw_config):
+        st.caption(raw_config["chart"])
+
+    def _add_chart(self, index, data, config):
+        chart = streamlit_vizzu.VizzuChart(height=380, key=f"vizzu_{self._key}_{index}")
+        chart.animate(data, streamlit_vizzu.Config(config))
+        chart.show()
+
+    def _add_show_code_button(self, config):
+        show_code = st.expander("Show code")
+        with show_code:
+            code_import = "from streamlit_vizzu import VizzuChart, Data, Config\nimport pandas as pd\n\n"
+            d_types = []
+            for column in self._df.columns:
+                if self._df[column].dtype == object:
+                    d_types.append(f"'{column}': str")
+                else:
+                    d_types.append(f"'{column}': float")
+            code_data = f"d_types={{{', '.join(d_types)}}}\ndf = pd.read_csv('{self._file_name}', dtype=d_types)\ndata = Data()\ndata.add_df(df)\n\n"
+            code_chart = f"chart = VizzuChart()\n\n"
+            code_animate = f"chart.animate(data, Config({config}))\n\n"
+            code_show = f"chart.show()\n\n"
+            st.code(
+                code_import + code_data + code_chart + code_animate + code_show,
+                language="python",
             )
-            chart.animate(data, streamlit_vizzu.Config(config))
-            chart.show()
 
     def _replace_config(self, value):
         if isinstance(value, str):
@@ -222,6 +256,7 @@ class ChartBuilder:
 class App:
     def __init__(self):
         self._df = None
+        self._file_name = None
         self._add_title()
         self._init_csv_file_loader()
         self._init_chart_builder()
@@ -232,9 +267,10 @@ class App:
     def _init_csv_file_loader(self):
         csv_file_uploader = CsvFileUploader()
         self._df = csv_file_uploader.df
+        self._file_name = csv_file_uploader.file_name
 
     def _init_chart_builder(self):
-        ChartBuilder(self._df)
+        ChartBuilder(self._file_name, self._df)
 
 
 App()
