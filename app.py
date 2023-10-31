@@ -100,8 +100,11 @@ class ChartBuilder:
 
     def __init__(self, df):
         self._df = df
-        self._categories1, self._categories2 = None, None
-        self._values1, self._values2 = None, None
+        self._cat1, self._cat2 = None, None
+        self._selected_cat1, self._selected_cat2 = None, None
+        self._value1, self._value2 = None, None
+        self._selected_value1, self._selected_value2 = None, None
+        self._label = None
         self._key = None
         self._presets = self._parse_presets_file()
         if self._df is not None:
@@ -125,32 +128,51 @@ class ChartBuilder:
         return categories, values
 
     def _add_select_buttons(self):
-        self._categories1, self._categories2 = self._add_select_buttons_by_type(
-            DataFrameParser.DIMENSION
-        )
-        self._values1, self._values2 = self._add_select_buttons_by_type(
-            DataFrameParser.MEASURE
-        )
+        (
+            self._cat1,
+            self._selected_cat1,
+            self._cat2,
+            self._selected_cat2,
+        ) = self._add_select_buttons_by_type(DataFrameParser.DIMENSION)
+        (
+            self._value1,
+            self._selected_value1,
+            self._value2,
+            self._selected_value2,
+        ) = self._add_select_buttons_by_type(DataFrameParser.MEASURE)
+        self._label = self._add_label_butto()
 
     def _add_select_buttons_by_type(self, type):
-        items = self._categories
+        items1 = self._categories
         if type == DataFrameParser.MEASURE:
-            items = self._values
-        button1 = st.selectbox(f"Select {type} 1 (mandatory)", items)
-        items_for_button2 = [c for c in items if c != button1]
-        items_for_button2.insert(0, None)
-        button2 = st.selectbox(f"Select {type} 2 (optional)", items_for_button2)
-        return button1, button2
+            items1 = self._values
+        button1 = st.selectbox(f"Select {type} 1 (mandatory)", items1)
+        items2 = [c for c in items1 if c != button1]
+        items2.insert(0, None)
+        button2 = st.selectbox(f"Select {type} 2 (optional)", items2)
+        return items1, button1, items2, button2
+
+    def _add_label_butto(self):
+        labels = [None]
+        for item in [
+            self._selected_cat1,
+            self._selected_cat2,
+            self._selected_value1,
+            self._selected_value2,
+        ]:
+            if item is not None:
+                labels.append(item)
+        return st.selectbox(f"Select Label (optional)", labels)
 
     def _set_key(self):
         contains = {"Cat1": False, "Cat2": False, "Value1": False, "Value2": False}
-        if self._categories1 is not None:
+        if self._selected_cat1 is not None:
             contains["Cat1"] = True
-        if self._categories2 is not None:
+        if self._selected_cat2 is not None:
             contains["Cat2"] = True
-        if self._values1 is not None:
+        if self._selected_value1 is not None:
             contains["Value1"] = True
-        if self._values2 is not None:
+        if self._selected_value2 is not None:
             contains["Value2"] = True
         self._key = ", ".join(key for key, value in contains.items() if value)
         if self._key not in self.KEYS:
@@ -178,6 +200,8 @@ class ChartBuilder:
                     else:
                         value = self._replace_config(value)
                     config[key] = value
+            if self._label is not None:
+                config["label"] = self._label
             st.write(raw_config["chart"])
             st.write(f"chart.animate(data, Config({config}))")
             chart = streamlit_vizzu.VizzuChart(
@@ -188,10 +212,10 @@ class ChartBuilder:
 
     def _replace_config(self, value):
         if isinstance(value, str):
-            value = value.replace("Cat1", self._categories1 or "")
-            value = value.replace("Cat2", self._categories2 or "")
-            value = value.replace("Value1", self._values1 or "")
-            value = value.replace("Value2", self._values2 or "")
+            value = value.replace("Cat1", self._selected_cat1 or "")
+            value = value.replace("Cat2", self._selected_cat2 or "")
+            value = value.replace("Value1", self._selected_value1 or "")
+            value = value.replace("Value2", self._selected_value2 or "")
         return value
 
 
