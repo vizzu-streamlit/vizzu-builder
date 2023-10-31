@@ -62,6 +62,8 @@ class CsvFileUploader:
 
     def _add_upload_button(self):
         self._csv_file = st.file_uploader("Upload a CSV file", type=["csv"])
+        if st.checkbox("Use sample data"):
+            self._csv_file = "music_data.csv"
 
     def _parse_csv_file(self):
         if self._csv_file is not None:
@@ -83,8 +85,12 @@ class CsvFileUploader:
         ]
         types_df = pd.DataFrame([types], columns=self._df.columns)
         types_df = types_df.set_index(pd.Index(["Type"]))
+        max_rows = len(self._df)
         num_rows = st.slider(
-            "Number of rows to show", min_value=0, max_value=len(self._df), value=0
+            "Number of rows to show",
+            min_value=0,
+            max_value=max_rows,
+            value=min(10, max_rows),
         )
         st.write(types_df.head(1))
         st.write(self._df.head(num_rows))
@@ -162,7 +168,7 @@ class ChartBuilder:
         ]:
             if item is not None:
                 labels.append(item)
-        return st.selectbox(f"Select Label (optional)", labels)
+        return st.selectbox("Select Label (optional)", labels)
 
     def _set_key(self):
         contains = {"Cat1": False, "Cat2": False, "Value1": False, "Value2": False}
