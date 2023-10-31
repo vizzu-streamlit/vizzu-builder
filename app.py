@@ -208,11 +208,49 @@ class ChartBuilder:
     def _add_charts(self):
         data = streamlit_vizzu.Data()
         data.add_df(self._df)
-        for index, raw_config in enumerate(self._presets[self._key]):
-            config = self._process_raw_config(raw_config)
+        for index in range(0, len(self._presets[self._key]), 2):
+            col1, col2 = st.columns(2)
+            self._add_chart(data, index, col1)
+            next_index = index + 1
+            if next_index < len(self._presets[self._key]):
+                self._add_chart(data, next_index, col2)
+
+    def _add_chart(self, data, index, col):
+        raw_config = self._presets[self._key][index]
+        config = self._process_raw_config(raw_config)
+        with col:
             self._add_chart_title(raw_config)
-            self._add_chart(index, data, config)
-            self._add_show_code_button(config)
+            self._add_chart_animation(index, data, config)
+            self._add_chart_code(config)
+
+    def _add_chart_title(self, raw_config):
+        st.caption(raw_config["chart"])
+
+    def _add_chart_animation(self, index, data, config):
+        chart = streamlit_vizzu.VizzuChart(
+            height=300, key=f"vizzu_{self._key}_{index}", use_container_width=True
+        )
+        chart.animate(data, streamlit_vizzu.Config(config))
+        chart.show()
+
+    def _add_chart_code(self, config):
+        show_code = st.expander("Show code")
+        with show_code:
+            code_import = "from streamlit_vizzu import VizzuChart, Data, Config\nimport pandas as pd\n\n"
+            d_types = []
+            for column in self._df.columns:
+                if self._df[column].dtype == object:
+                    d_types.append(f"'{column}': str")
+                else:
+                    d_types.append(f"'{column}': float")
+            code_data = f"d_types={{{', '.join(d_types)}}}\ndf = pd.read_csv('{self._file_name}', dtype=d_types)\ndata = Data()\ndata.add_df(df)\n\n"
+            code_chart = f"chart = VizzuChart()\n\n"
+            code_animate = f"chart.animate(data, Config({config}))\n\n"
+            code_show = f"chart.show()\n\n"
+            st.code(
+                code_import + code_data + code_chart + code_animate + code_show,
+                language="python",
+            )
 
     def _process_raw_config(self, raw_config):
         config = {}
@@ -237,33 +275,6 @@ class ChartBuilder:
             config["label"] = self._label
         return config
 
-    def _add_chart_title(self, raw_config):
-        st.caption(raw_config["chart"])
-
-    def _add_chart(self, index, data, config):
-        chart = streamlit_vizzu.VizzuChart(height=380, key=f"vizzu_{self._key}_{index}")
-        chart.animate(data, streamlit_vizzu.Config(config))
-        chart.show()
-
-    def _add_show_code_button(self, config):
-        show_code = st.expander("Show code")
-        with show_code:
-            code_import = "from streamlit_vizzu import VizzuChart, Data, Config\nimport pandas as pd\n\n"
-            d_types = []
-            for column in self._df.columns:
-                if self._df[column].dtype == object:
-                    d_types.append(f"'{column}': str")
-                else:
-                    d_types.append(f"'{column}': float")
-            code_data = f"d_types={{{', '.join(d_types)}}}\ndf = pd.read_csv('{self._file_name}', dtype=d_types)\ndata = Data()\ndata.add_df(df)\n\n"
-            code_chart = f"chart = VizzuChart()\n\n"
-            code_animate = f"chart.animate(data, Config({config}))\n\n"
-            code_show = f"chart.show()\n\n"
-            st.code(
-                code_import + code_data + code_chart + code_animate + code_show,
-                language="python",
-            )
-
     def _replace_config(self, value):
         if isinstance(value, str):
             value = value.replace("Cat1", self._selected_cat1 or "")
@@ -277,6 +288,7 @@ class App:
     def __init__(self):
         self._df = None
         self._file_name = None
+        # st.set_page_config(layout="wide")
         self._add_title()
         self._init_csv_file_loader()
         self._init_chart_builder()
