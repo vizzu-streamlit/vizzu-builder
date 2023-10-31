@@ -217,14 +217,22 @@ class ChartBuilder:
     def _process_raw_config(self, raw_config):
         config = {}
         for key, value in raw_config.items():
-            if key == "y_range_min" or key == "y_range_max":
-                continue
-            if key != "chart" and value is not None:
+            if key not in ["chart", "y_range_min", "y_range_max"] and value is not None:
                 if isinstance(value, list):
                     value = [self._replace_config(v) for v in value]
                 else:
                     value = self._replace_config(value)
                 config[key] = value
+        if "y" in config:
+            config["y"] = {"set": config["y"]}
+        if "y_range_min" in raw_config:
+            config["y"] = config.get("y", {})
+            config["y"]["range"] = config["y"].get("range", {})
+            config["y"]["range"]["min"] = raw_config["y_range_min"]
+        if "y_range_max" in raw_config:
+            config["y"] = config.get("y", {})
+            config["y"]["range"] = config["y"].get("range", {})
+            config["y"]["range"]["max"] = raw_config["y_range_max"]
         if self._label is not None:
             config["label"] = self._label
         return config
