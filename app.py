@@ -1,5 +1,4 @@
 import streamlit as st
-from streamlit.components.v1 import html
 import pandas as pd
 import json
 import streamlit_vizzu
@@ -11,12 +10,14 @@ class DataFrameParser:
 
     def __init__(self, df):
         self._df = df
+
+    def process_dataframe(self):
         self._add_column_types()
 
     def _add_column_types(self):
         column_names = self._df.columns
         for column_name in column_names:
-            if not self._is_column_convertable_to_float(column_name):
+            if not self._is_column_convertible_to_float(column_name):
                 continue
             index = (
                 1 if pd.api.types.is_numeric_dtype(self._df[column_name].dtype) else 0
@@ -28,7 +29,7 @@ class DataFrameParser:
             )
             self._convert_column(column_name, selected_type)
 
-    def _is_column_convertable_to_float(self, column_name):
+    def _is_column_convertible_to_float(self, column_name):
         try:
             self._df[column_name].astype(float)
             return True
@@ -46,6 +47,7 @@ class CsvFileUploader:
     def __init__(self):
         self._csv_file = None
         self._df = None
+
         self._add_title()
         self._add_upload_button()
         self._parse_csv_file()
@@ -67,25 +69,25 @@ class CsvFileUploader:
 
     def _init_data_frame_parser(self):
         if self._df is not None:
-            DataFrameParser(self._df)
+            DataFrameParser(self._df).process_dataframe()
             show_data = st.checkbox("Show Data", False)
             if show_data:
-                types = [
-                    DataFrameParser.DIMENSION
-                    if self._df[col].dtype == object
-                    else DataFrameParser.MEASURE
-                    for col in self._df.columns
-                ]
-                types_df = pd.DataFrame([types], columns=self._df.columns)
-                types_df = types_df.set_index(pd.Index(["Type"]))
-                num_rows = st.slider(
-                    "Number of rows to show",
-                    min_value=0,
-                    max_value=len(self._df),
-                    value=0,
-                )
-                st.write(types_df.head(1))
-                st.write(self._df.head(num_rows))
+                self._show_data()
+
+    def _show_data(self):
+        types = [
+            DataFrameParser.DIMENSION
+            if self._df[col].dtype == object
+            else DataFrameParser.MEASURE
+            for col in self._df.columns
+        ]
+        types_df = pd.DataFrame([types], columns=self._df.columns)
+        types_df = types_df.set_index(pd.Index(["Type"]))
+        num_rows = st.slider(
+            "Number of rows to show", min_value=0, max_value=len(self._df), value=0
+        )
+        st.write(types_df.head(1))
+        st.write(self._df.head(num_rows))
 
 
 class ChartBuilder:
