@@ -68,7 +68,24 @@ class CsvFileUploader:
     def _init_data_frame_parser(self):
         if self._df is not None:
             DataFrameParser(self._df)
-            st.write(self._df.head(5))
+            show_data = st.checkbox("Show Data", False)
+            if show_data:
+                types = [
+                    DataFrameParser.DIMENSION
+                    if self._df[col].dtype == object
+                    else DataFrameParser.MEASURE
+                    for col in self._df.columns
+                ]
+                types_df = pd.DataFrame([types], columns=self._df.columns)
+                types_df = types_df.set_index(pd.Index(["Type"]))
+                num_rows = st.slider(
+                    "Number of rows to show",
+                    min_value=0,
+                    max_value=len(self._df),
+                    value=0,
+                )
+                st.write(types_df.head(1))
+                st.write(self._df.head(num_rows))
 
 
 class ChartBuilder:
