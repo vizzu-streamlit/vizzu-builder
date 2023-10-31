@@ -202,7 +202,7 @@ class ChartBuilder:
                     config[key] = value
             if self._label is not None:
                 config["label"] = self._label
-            st.write(raw_config["chart"])
+            st.caption(raw_config["chart"])
             st.write(f"chart.animate(data, Config({config}))")
             chart = streamlit_vizzu.VizzuChart(
                 height=380, key=f"vizzu_{self._key}_{index}"
