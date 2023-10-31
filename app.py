@@ -44,6 +44,8 @@ class DataFrameParser:
 
 
 class CsvFileUploader:
+    SAMPLE_DATA = "music_data.csv"
+
     def __init__(self):
         self._csv_file = None
         self._df = None
@@ -60,6 +62,8 @@ class CsvFileUploader:
     @property
     def file_name(self):
         if self._csv_file:
+            if isinstance(self._csv_file, str):
+                return self.SAMPLE_DATA
             return self._csv_file.name
         return None
 
@@ -69,7 +73,7 @@ class CsvFileUploader:
     def _add_upload_button(self):
         self._csv_file = st.file_uploader("Upload a CSV file", type=["csv"])
         if st.checkbox("Use sample data"):
-            self._csv_file = "music_data.csv"
+            self._csv_file = self.SAMPLE_DATA
 
     def _parse_csv_file(self):
         if self._csv_file is not None:
@@ -213,6 +217,8 @@ class ChartBuilder:
     def _process_raw_config(self, raw_config):
         config = {}
         for key, value in raw_config.items():
+            if key == "y_range_min" or key == "y_range_max":
+                continue
             if key != "chart" and value is not None:
                 if isinstance(value, list):
                     value = [self._replace_config(v) for v in value]

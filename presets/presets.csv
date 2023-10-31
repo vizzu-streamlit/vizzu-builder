@@ -1,45 +1,47 @@
-chart,coordSystem,geometry,x,y,color,lightness,size,noop,split,align,orientation
-Column Chart,cartesian,rectangle,Cat1,Value1,,,,,,,horizontal
-Grouped Column Chart,cartesian,rectangle,"Cat1,Cat2",Value1,Cat1,,,,,,horizontal
-Stacked Column Chart,cartesian,rectangle,Cat1,"Cat2,Value1",Cat2,,,,,,horizontal
-Splitted Column Chart,cartesian,rectangle,Cat1,"Cat2,Value1",Cat2,,,,True,,horizontal
-100% Stacked Column Chart,cartesian,rectangle,Cat1,"Cat2,Value1",Cat2,,,,,stretch,horizontal
-Waterfall,cartesian,rectangle,Cat1,Value1,Value1,,,,,,horizontal
-Stacked Mekko Chart,cartesian,rectangle,"Cat1,Value1","Cat2,Value2",Cat2,,,,,,horizontal
-Marimekko Chart,cartesian,rectangle,"Cat1,Value1","Cat2,Value2",Cat2,,,,,stretch,horizontal
-Bar Chart,cartesian,rectangle,Value1,Cat1,,,,,,,vertical
-Grouped Bar Chart,cartesian,rectangle,Value1,"Cat1,Cat2",Cat1,,,,,,vertical
-Stacked Bar Chart,cartesian,rectangle,"Cat2,Value1",Cat1,Cat2,,,,,,vertical
-Splitted Bar Chart,cartesian,rectangle,"Cat2,Value1",Cat1,Cat2,,,,True,,vertical
-100% Stacked Bar Chart,cartesian,rectangle,"Cat2,Value1",Cat1,Cat2,,,,,stretch,horizontal
-Lollipop,cartesian,circle,Cat1,Value1,,,,,,,horizontal
-Scatter Plot,cartesian,circle,Value1,Value2,,,,Cat1,,,horizontal
-Correlogram,cartesian,circle,Cat1,Cat2,Value1,,Value1,,,,horizontal
-Area Chart,cartesian,area,Cat1,Value1,,,,,,,horizontal
-Stacked Area Chart,cartesian,area,Cat1,"Cat2,Value1",Cat2,,,,,,horizontal
-100% Stacked Area Chart,cartesian,area,Cat1,"Cat2,Value1",Cat2,,,,,stretch,horizontal
-Splitted Area Chart - Ridgeline Plot,cartesian,area,Cat1,"Cat2,Value1",Cat2,,,,True,,horizontal
-Stream Graph,cartesian,area,Cat1,"Cat2,Value1",Cat2,,,,,center,horizontal
-Stream Graph Vertical,cartesian,area,"Cat2,Value1",Cat1,Cat2,,,,,center,vertical
-Violin Graph,cartesian,area,Cat1,"Cat2,Value1",Cat2,,,,True,center,horizontal
-Violin Graph Vertical,cartesian,area,"Cat2,Value1",Cat1,Cat2,,,,True,center,vertical
-"Line Chart ",cartesian,line,Cat1,Value1,,,,,,,horizontal
-Line Chart,cartesian,line,Cat1,Value1,Cat2,,,,,,horizontal
-Vertical Line Chart,cartesian,line,Value1,Cat1,Cat2,,,,,,vertical
-Pie Chart,polar,rectangle,"Cat1,Value1",,Cat1,,,,,,vertical
-Polar Column Chart,polar,rectangle,Cat1,Value1,,,,,,,horizontal
-Polar Stacked Column Chart,polar,rectangle,Cat1,"Cat2,Value1",Cat2,,,,,,horizontal
-Variable Radius Pie Chart,polar,rectangle,"Cat1,Value1",Value2,Cat1,,,,,,horizontal
-Polar Area Chart,polar,rectangle,Cat1,"Cat2,Value1",Cat2,,,,,,horizontal
-Radial Bar Chart,polar,rectangle,Value1,Cat1,,,,,,,vertical
-Radial Stacked Bar Chart,polar,rectangle,"Cat2,Value1",Cat1,Cat2,,,,,,vertical
-Donut Chart,polar,rectangle,"Cat1,Value1",,Cat1,,,,,,vertical
-Nested Donut Chart,polar,rectangle,"Cat1,Value1",Cat2,Cat1,,,,,stretch,vertical
-Polar Scatter,polar,circle,Value1,Value2,,,,Cat1,,,horizontal
-Polar Stacked Area,polar,area,Cat1,"Cat2,Value1",Cat2,,,,,min,horizontal
-Treemap,cartesian,rectangle,,,Cat1,,"Cat1,Value1",,,,
-Stacked Treemap,cartesian,rectangle,,,Cat1,Value2,"Cat2,Value1",,,,
-Heat Map Gradient,cartesian,rectangle,Cat1,Cat2,Value1,,,,,,horizontal
-Heat Map,cartesian,rectangle,Cat1,Cat2,,Value1,,,,,horizontal
-Bubble Chart,cartesian,circle,,,Cat1,,Value1,,,,
-Stacked Bubble Chart,cartesian,circle,,,Cat1,,"Cat2,Value1",,,,
+chart,coordSystem,geometry,x,y,color,lightness,size,noop,split,align,orientation,y_range_min,y_range_max
+Column Chart,cartesian,rectangle,Cat1,Value1,,,,,,,horizontal,,
+Grouped Column Chart,cartesian,rectangle,"Cat1,Cat2",Value1,Cat1,,,,,,horizontal,,
+Stacked Column Chart,cartesian,rectangle,Cat1,"Cat2,Value1",Cat2,,,,,,horizontal,,
+Splitted Column Chart,cartesian,rectangle,Cat1,"Cat2,Value1",Cat2,,,,TRUE,,horizontal,,
+100% Stacked Column Chart,cartesian,rectangle,Cat1,"Cat2,Value1",Cat2,,,,,stretch,horizontal,,
+Waterfall,cartesian,rectangle,Cat1,"Cat1,Value1",Value1,,,,,,horizontal,,
+Mekko,cartesian,rectangle,"Cat1,Value1",Value2,,,,,,,horizontal,,
+Stacked Mekko Chart,cartesian,rectangle,"Cat1,Value1","Cat2,Value2",Cat2,,,,,,horizontal,,
+Marimekko Chart,cartesian,rectangle,"Cat1,Value1","Cat2,Value2",Cat2,,,,,stretch,horizontal,,
+Bar Chart,cartesian,rectangle,Value1,Cat1,,,,,,,vertical,,
+Grouped Bar Chart,cartesian,rectangle,Value1,"Cat1,Cat2",Cat1,,,,,,vertical,,
+Stacked Bar Chart,cartesian,rectangle,"Cat2,Value1",Cat1,Cat2,,,,,,vertical,,
+Splitted Bar Chart,cartesian,rectangle,"Cat2,Value1",Cat1,Cat2,,,,TRUE,,vertical,,
+100% Stacked Bar Chart,cartesian,rectangle,"Cat2,Value1",Cat1,Cat2,,,,,stretch,horizontal,,
+Lollipop,cartesian,circle,Cat1,Value1,,,,,,,horizontal,,
+Scatter Plot,cartesian,circle,Value1,Value2,,,,Cat1,,,horizontal,,
+Scatter Plot,cartesian,circle,Value1,Value2,Cat1,,,Cat2,,,horizontal,,
+Correlogram,cartesian,circle,Cat1,Cat1,Value1,,Value1,,,,horizontal,,
+Area Chart,cartesian,area,Cat1,Value1,,,,,,,horizontal,,
+Stacked Area Chart,cartesian,area,Cat1,"Cat2,Value1",Cat2,,,,,,horizontal,,
+100% Stacked Area Chart,cartesian,area,Cat1,"Cat2,Value1",Cat2,,,,,stretch,horizontal,,
+Splitted Area Chart - Ridgeline Plot,cartesian,area,Cat1,"Cat2,Value1",Cat2,,,,TRUE,,horizontal,,
+Stream Graph,cartesian,area,Cat1,"Cat2,Value1",Cat2,,,,,center,horizontal,,
+Stream Graph Vertical,cartesian,area,"Cat2,Value1",Cat1,Cat2,,,,,center,vertical,,
+Violin Graph,cartesian,area,Cat1,"Cat2,Value1",Cat2,,,,TRUE,center,horizontal,,
+Violin Graph Vertical,cartesian,area,"Cat2,Value1",Cat1,Cat2,,,,TRUE,center,vertical,,
+Line Chart,cartesian,line,Cat1,Value1,,,,,,,horizontal,,
+Line Chart,cartesian,line,Cat1,Value1,Cat2,,,,,,horizontal,,
+Vertical Line Chart,cartesian,line,Value1,Cat1,Cat2,,,,,,vertical,,
+Pie Chart,polar,rectangle,"Cat1,Value1",,Cat1,,,,,,vertical,,
+Polar Column Chart,polar,rectangle,Cat1,Value1,,,,,,,horizontal,,
+Polar Stacked Column Chart,polar,rectangle,Cat1,"Cat2,Value1",Cat2,,,,,,horizontal,,
+Variable Radius Pie Chart,polar,rectangle,"Cat1,Value1",Value2,Cat1,,,,,,horizontal,,
+Polar Area Chart,polar,area,Cat1,"Cat2,Value1",Cat2,,,,,,horizontal,,
+Radial Bar Chart,polar,rectangle,Value1,Cat1,,,,,,,vertical,-50%,
+Radial Stacked Bar Chart,polar,rectangle,"Cat2,Value1",Cat1,Cat2,,,,,,vertical,-50%,
+Donut Chart,polar,rectangle,"Cat1,Value1",,Cat1,,,,,,vertical,-200%,100%
+Nested Donut Chart,polar,rectangle,"Cat1,Value1",Cat2,Cat1,,,,,stretch,vertical,,
+Polar Scatter,polar,circle,Value1,Value2,,,,Cat1,,,horizontal,,
+Polar Stacked Area,polar,area,Cat1,"Cat2,Value1",Cat2,,,,,min,horizontal,,
+Treemap,cartesian,rectangle,,,Cat1,,"Cat1,Value1",,,,,,
+Stacked Treemap,cartesian,rectangle,,,Cat1,Value2,"Cat2,Value1",,,,,,
+Heat Map Gradient,cartesian,rectangle,Cat1,Cat2,Value1,,,,,,horizontal,,
+Heat Map,cartesian,rectangle,Cat1,Cat2,,Value1,,,,,horizontal,,
+Bubble Chart,cartesian,circle,,,Cat1,,Value1,,,,,,
+Stacked Bubble Chart,cartesian,circle,,,Cat1,,"Cat2,Value1",,,,,,

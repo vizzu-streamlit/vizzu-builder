@@ -12,21 +12,28 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Waterfall",
             "coordSystem": "cartesian",
             "geometry": "rectangle",
             "x": "Cat1",
-            "y": "Value1",
+            "y": [
+                "Cat1",
+                "Value1"
+            ],
             "color": "Value1",
             "lightness": null,
             "size": null,
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Bar Chart",
@@ -40,7 +47,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "vertical"
+            "orientation": "vertical",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Lollipop",
@@ -54,7 +63,25 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
+        },
+        {
+            "chart": "Correlogram",
+            "coordSystem": "cartesian",
+            "geometry": "circle",
+            "x": "Cat1",
+            "y": "Cat1",
+            "color": "Value1",
+            "lightness": null,
+            "size": "Value1",
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Area Chart",
@@ -68,10 +95,12 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
-            "chart": "Line Chart ",
+            "chart": "Line Chart",
             "coordSystem": "cartesian",
             "geometry": "line",
             "x": "Cat1",
@@ -82,7 +111,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Pie Chart",
@@ -99,7 +130,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "vertical"
+            "orientation": "vertical",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Polar Column Chart",
@@ -113,7 +146,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Radial Bar Chart",
@@ -127,7 +162,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "vertical"
+            "orientation": "vertical",
+            "y_range_min": "-50%",
+            "y_range_max": null
         },
         {
             "chart": "Donut Chart",
@@ -144,7 +181,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "vertical"
+            "orientation": "vertical",
+            "y_range_min": "-200%",
+            "y_range_max": "100%"
         },
         {
             "chart": "Treemap",
@@ -161,7 +200,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": null
+            "orientation": null,
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Bubble Chart",
@@ -175,10 +216,31 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": null
+            "orientation": null,
+            "y_range_min": null,
+            "y_range_max": null
         }
     ],
     "Cat1, Value1, Value2": [
+        {
+            "chart": "Mekko",
+            "coordSystem": "cartesian",
+            "geometry": "rectangle",
+            "x": [
+                "Cat1",
+                "Value1"
+            ],
+            "y": "Value2",
+            "color": null,
+            "lightness": null,
+            "size": null,
+            "noop": null,
+            "split": null,
+            "align": null,
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
+        },
         {
             "chart": "Scatter Plot",
             "coordSystem": "cartesian",
@@ -191,7 +253,9 @@
             "noop": "Cat1",
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Variable Radius Pie Chart",
@@ -208,7 +272,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Polar Scatter",
@@ -222,7 +288,9 @@
             "noop": "Cat1",
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         }
     ],
     "Cat1, Cat2, Value1": [
@@ -241,7 +309,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Stacked Column Chart",
@@ -258,7 +328,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Splitted Column Chart",
@@ -275,7 +347,9 @@
             "noop": null,
             "split": true,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "100% Stacked Column Chart",
@@ -292,7 +366,9 @@
             "noop": null,
             "split": null,
             "align": "stretch",
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Grouped Bar Chart",
@@ -309,7 +385,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "vertical"
+            "orientation": "vertical",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Stacked Bar Chart",
@@ -326,7 +404,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "vertical"
+            "orientation": "vertical",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Splitted Bar Chart",
@@ -343,7 +423,9 @@
             "noop": null,
             "split": true,
             "align": null,
-            "orientation": "vertical"
+            "orientation": "vertical",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "100% Stacked Bar Chart",
@@ -360,21 +442,9 @@
             "noop": null,
             "split": null,
             "align": "stretch",
-            "orientation": "horizontal"
-        },
-        {
-            "chart": "Correlogram",
-            "coordSystem": "cartesian",
-            "geometry": "circle",
-            "x": "Cat1",
-            "y": "Cat2",
-            "color": "Value1",
-            "lightness": null,
-            "size": "Value1",
-            "noop": null,
-            "split": null,
-            "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Stacked Area Chart",
@@ -391,7 +461,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "100% Stacked Area Chart",
@@ -408,7 +480,9 @@
             "noop": null,
             "split": null,
             "align": "stretch",
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Splitted Area Chart - Ridgeline Plot",
@@ -425,7 +499,9 @@
             "noop": null,
             "split": true,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Stream Graph",
@@ -442,7 +518,9 @@
             "noop": null,
             "split": null,
             "align": "center",
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Stream Graph Vertical",
@@ -459,7 +537,9 @@
             "noop": null,
             "split": null,
             "align": "center",
-            "orientation": "vertical"
+            "orientation": "vertical",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Violin Graph",
@@ -476,7 +556,9 @@
             "noop": null,
             "split": true,
             "align": "center",
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Violin Graph Vertical",
@@ -493,7 +575,9 @@
             "noop": null,
             "split": true,
             "align": "center",
-            "orientation": "vertical"
+            "orientation": "vertical",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Line Chart",
@@ -507,7 +591,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Vertical Line Chart",
@@ -521,7 +607,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "vertical"
+            "orientation": "vertical",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Polar Stacked Column Chart",
@@ -538,12 +626,14 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Polar Area Chart",
             "coordSystem": "polar",
-            "geometry": "rectangle",
+            "geometry": "area",
             "x": "Cat1",
             "y": [
                 "Cat2",
@@ -555,7 +645,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Radial Stacked Bar Chart",
@@ -572,7 +664,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "vertical"
+            "orientation": "vertical",
+            "y_range_min": "-50%",
+            "y_range_max": null
         },
         {
             "chart": "Nested Donut Chart",
@@ -589,7 +683,9 @@
             "noop": null,
             "split": null,
             "align": "stretch",
-            "orientation": "vertical"
+            "orientation": "vertical",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Polar Stacked Area",
@@ -606,7 +702,9 @@
             "noop": null,
             "split": null,
             "align": "min",
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Heat Map Gradient",
@@ -620,7 +718,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Heat Map",
@@ -634,7 +734,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Stacked Bubble Chart",
@@ -651,7 +753,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": null
+            "orientation": null,
+            "y_range_min": null,
+            "y_range_max": null
         }
     ],
     "Cat1, Cat2, Value1, Value2": [
@@ -673,7 +777,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Marimekko Chart",
@@ -693,7 +799,25 @@
             "noop": null,
             "split": null,
             "align": "stretch",
-            "orientation": "horizontal"
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
+        },
+        {
+            "chart": "Scatter Plot",
+            "coordSystem": "cartesian",
+            "geometry": "circle",
+            "x": "Value1",
+            "y": "Value2",
+            "color": "Cat1",
+            "lightness": null,
+            "size": null,
+            "noop": "Cat2",
+            "split": null,
+            "align": null,
+            "orientation": "horizontal",
+            "y_range_min": null,
+            "y_range_max": null
         },
         {
             "chart": "Stacked Treemap",
@@ -710,7 +834,9 @@
             "noop": null,
             "split": null,
             "align": null,
-            "orientation": null
+            "orientation": null,
+            "y_range_min": null,
+            "y_range_max": null
         }
     ]
 }
