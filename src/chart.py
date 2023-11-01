@@ -1,3 +1,4 @@
+import black
 import json
 import streamlit_vizzu
 import streamlit as st
@@ -162,6 +163,7 @@ class ChartBuilder:
             filters = f'Data.filter("{self._filters}"), ' if self._filters else ""
             code += f"chart.animate({filters}Config({config}))\n"
             code += "chart.show()\n\n"
+            code = black.format_str(code, mode=black.FileMode())
             st.code(
                 code,
                 language="python",
