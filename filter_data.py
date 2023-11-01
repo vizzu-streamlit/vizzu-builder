@@ -47,10 +47,8 @@ def filter_dataframe(df: pd.DataFrame) -> str | None:
         to_filter_columns = st.multiselect("Filter dataframe on", df.columns)
         rows = row(2)
         for column in to_filter_columns:
-            # _, right = st.columns((1, 20))
-            # with right:
             # Treat columns with < 10 unique values as categorical
-            if is_categorical_dtype(df[column]) or df[column].nunique() < 20:
+            if is_categorical_dtype(df[column]) or df[column].nunique() < 10:
                 user_cat_input = rows.multiselect(
                     f"Values for {column}",
                     df[column].unique(),
