@@ -14,13 +14,13 @@ class App:
         self._df = None
         self._file_name = None
         self._filters = None
-        st.set_page_config(page_title="Vizzu Chart Builder", page_icon="🏗️")
+        st.set_page_config(page_title="Vizzu Builder", page_icon="🏗️")
         self._add_title()
         self._init_csv_file_loader()
         self._init_builders()
 
     def _add_title(self):
-        st.title("🏗️ Vizzu Chart Builder")
+        st.title("🏗️ Vizzu Builder")
 
     def _init_csv_file_loader(self):
         csv_file_uploader = CsvFileUploader()
