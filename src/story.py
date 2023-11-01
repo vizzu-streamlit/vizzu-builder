@@ -22,6 +22,7 @@ class StoryBuilder:
         self._df = df
         self._width = 640
         self._height = 320
+        self._start_slide = -2
         self._tooltip = True
         if df is not None:
             if "df" not in st.session_state:
@@ -33,7 +34,7 @@ class StoryBuilder:
                 data.add_df(df)
                 st.session_state.story = Story(data=data)
                 self.set_size(self._width, self._height)
-                self.set_start_slide(-2)
+                self.set_start_slide(self._start_slide)
                 st.session_state.story_code = []
 
     def set_start_slide(self, index):
@@ -77,6 +78,7 @@ class StoryBuilder:
 
     def _add_download_button(self, rows):
         if "story" in st.session_state:
+            self.set_start_slide(0)
             rows.download_button(
                 label="Download Story",
                 data=st.session_state.story.to_html(),
@@ -84,6 +86,7 @@ class StoryBuilder:
                 mime="text/html",
                 use_container_width=True,
             )
+            self.set_start_slide(self._start_slide)
 
     def _add_show_code_button(self):
         if "story" in st.session_state and "story_code" in st.session_state:
