@@ -15,6 +15,11 @@ class StoryBuilder:
                 data.add_df(df)
                 st.session_state.story = Story(data=data)
                 self.set_size(640, 320)
+                self.set_start_slide(-2)
+
+    def set_start_slide(self, index):
+        if "story" in st.session_state:
+            st.session_state.story.start_slide = index
 
     def set_size(self, width, height):
         if "story" in st.session_state:
