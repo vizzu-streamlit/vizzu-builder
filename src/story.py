@@ -5,6 +5,11 @@ from ipyvizzustory import Slide, Step
 from ipyvizzu.animation import Config, Data
 
 
+def delete_last_slide():
+    if "story" in st.session_state and st.session_state.story["slides"]:
+        st.session_state.story["slides"].pop()
+
+
 class StoryBuilder:
     def __init__(self, df):
         if df is not None:
@@ -45,9 +50,11 @@ class StoryBuilder:
 
     def _add_delete_button(self, rows):
         if "story" in st.session_state and st.session_state.story["slides"]:
-            delete = rows.button("Delete last Slide", use_container_width=True)
-            if delete:
-                st.session_state.story["slides"].pop()
+            rows.button(
+                "Delete last Slide",
+                use_container_width=True,
+                on_click=delete_last_slide,
+            )
 
     def _add_download_button(self, rows):
         if "story" in st.session_state:
