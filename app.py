@@ -5,6 +5,9 @@ from src.data.loader import CsvFileUploader
 from src.data.filter import filter_dataframe
 from src.chart import ChartBuilder
 
+if "filters" not in st.session_state:
+    st.session_state["filters"] = None
+
 
 class App:
     def __init__(self):
@@ -24,10 +27,10 @@ class App:
         self._df = csv_file_uploader.df
         self._file_name = csv_file_uploader.file_name
         if self._df is not None:
-            self._filters = filter_dataframe(self._df)
+            filter_dataframe(self._df)
 
     def _init_builders(self):
-        ChartBuilder(self._file_name, self._df, self._filters)
+        ChartBuilder(self._file_name, self._df, st.session_state["filters"])
 
 
 App()

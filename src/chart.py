@@ -31,8 +31,10 @@ class ChartBuilder:
         if self._df is not None:
             self._categories, self._values = self._get_columns()
             self._add_title()
-            self.select_rows = row(2)
-            self._add_select_buttons()
+            with st.form("Chart builder form"):
+                self.select_rows = row(2)
+                self._add_select_buttons()
+                st.form_submit_button("Update charts")
             self._set_key()
             self._add_charts()
             self._add_story()
@@ -159,7 +161,7 @@ class ChartBuilder:
             code += "chart = VizzuChart()\n"
             if self._tooltips:
                 code += 'chart.feature("tooltip", True)\n'
-            code += f"chart.animate(data)\n"
+            code += "chart.animate(data)\n"
             filters = f'Data.filter("{self._filters}"), ' if self._filters else ""
             code += f"chart.animate({filters}Config({config}))\n"
             code += "chart.show()\n\n"

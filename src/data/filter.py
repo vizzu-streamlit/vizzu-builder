@@ -10,6 +10,9 @@ from pandas.api.types import (
 )
 from streamlit_extras.row import row
 
+if "filters" not in st.session_state:
+    st.session_state["filters"] = None
+
 
 def filter_dataframe(df: pd.DataFrame) -> str | None:
     """
@@ -105,4 +108,7 @@ def filter_dataframe(df: pd.DataFrame) -> str | None:
 
     filters_wrapped = [f"({_f})" for _f in filters]
 
-    return " && ".join(filters_wrapped) if filters_wrapped else None
+    filters = " && ".join(filters_wrapped) if filters_wrapped else None
+
+    if st.button("Update data"):
+        st.session_state["filters"] = filters
