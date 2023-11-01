@@ -31,8 +31,9 @@ class StoryBuilder:
 
     def add_slide(self, filters, config):
         if "story" in st.session_state:
+            normalized_config = self._normalize_config(config)
             st.session_state.story.add_slide(
-                Slide(Step(Data.filter(filters), Config(config)))
+                Slide(Step(Data.filter(filters), Config(normalized_config)))
             )
 
     def play(self):
@@ -57,3 +58,35 @@ class StoryBuilder:
                 mime="text/html",
                 use_container_width=True,
             )
+
+    def _normalize_config(self, config):
+        normalized_config = {}
+        normalized_config["x"] = None if "x" not in config else config["x"]
+
+        y_set = config.get("y", {}).get("set", None)
+        y_range_min = config.get("y", {}).get("range", {}).get("min", "auto")
+        y_range_max = config.get("y", {}).get("range", {}).get("max", "auto")
+        normalized_config["y"] = {
+            "set": y_set,
+            "range": {"min": y_range_min, "max": y_range_max},
+        }
+
+        normalized_config["color"] = None if "color" not in config else config["color"]
+        normalized_config["lightness"] = (
+            None if "lightness" not in config else config["lightness"]
+        )
+        normalized_config["size"] = None if "size" not in config else config["size"]
+        normalized_config["noop"] = None if "noop" not in config else config["noop"]
+
+        normalized_config["split"] = False if "split" not in config else config["split"]
+        normalized_config["align"] = (
+            "none" if "align" not in config else config["align"]
+        )
+
+        normalized_config["coordSystem"] = config["coordSystem"]
+        normalized_config["geometry"] = config["geometry"]
+        normalized_config["orientation"] = (
+            "horizontal" if "orientation" not in config else config["orientation"]
+        )
+
+        return normalized_config

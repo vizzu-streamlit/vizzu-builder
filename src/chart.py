@@ -183,11 +183,11 @@ class ChartBuilder:
                 config[key] = value
         if "y" in config:
             config["y"] = {"set": config["y"]}
-        if "y_range_min" in raw_config:
+        if "y_range_min" in raw_config and raw_config["y_range_min"] is not None:
             config["y"] = config.get("y", {})
             config["y"]["range"] = config["y"].get("range", {})
             config["y"]["range"]["min"] = raw_config["y_range_min"]
-        if "y_range_max" in raw_config:
+        if "y_range_max" in raw_config and raw_config["y_range_max"] is not None:
             config["y"] = config.get("y", {})
             config["y"]["range"] = config["y"].get("range", {})
             config["y"]["range"]["max"] = raw_config["y_range_max"]
