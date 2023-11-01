@@ -34,6 +34,7 @@ class ChartBuilder:
             self._add_select_buttons()
             self._set_key()
             self._add_charts()
+            self._add_story()
 
     def _add_title(self):
         st.subheader("Create Chart")
@@ -129,6 +130,7 @@ class ChartBuilder:
             self._add_chart_title(raw_config)
             self._add_chart_animation(index, data, config)
             self._add_chart_code(config)
+            self._add_save_button(config)
 
     def _add_chart_title(self, raw_config):
         st.subheader(raw_config["chart"])
@@ -155,7 +157,7 @@ class ChartBuilder:
             code += "\n"
             code += "chart = VizzuChart()\n"
             if self._tooltips:
-                code += "chart.feature('tooltip', True)\n"
+                code += 'chart.feature("tooltip", True)\n'
             code += f"chart.animate(data)\n"
             filters = f'Data.filter("{self._filters}"), ' if self._filters else ""
             code += f"chart.animate({filters}Config({config}))\n"
@@ -164,6 +166,11 @@ class ChartBuilder:
                 code,
                 language="python",
             )
+
+    def _add_save_button(self, config):
+        button = st.button("Add Chart to Story", key=config, use_container_width=True)
+        if button:
+            self._story_builder.add_slide(self._filters, config)
 
     def _process_raw_config(self, raw_config):
         config = {}
@@ -195,3 +202,6 @@ class ChartBuilder:
             value = value.replace("Value1", self._selected_value1 or "")
             value = value.replace("Value2", self._selected_value2 or "")
         return value
+
+    def _add_story(self):
+        self._story_builder.play()
