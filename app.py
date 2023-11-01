@@ -14,7 +14,7 @@ class App:
         st.set_page_config(page_title="Vizzu Chart Builder", page_icon="🏗️")
         self._add_title()
         self._init_csv_file_loader()
-        self._init_chart_builder()
+        self._init_builders()
 
     def _add_title(self):
         st.title("🏗️ Vizzu Chart Builder")
@@ -26,7 +26,7 @@ class App:
         if self._df is not None:
             self._filters = filter_dataframe(self._df)
 
-    def _init_chart_builder(self):
+    def _init_builders(self):
         ChartBuilder(self._file_name, self._df, self._filters)
 
 
