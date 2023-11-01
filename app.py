@@ -1,7 +1,12 @@
+from __future__ import annotations
+
 import streamlit as st
 import pandas as pd
 import json
 import streamlit_vizzu
+from filter_data import filter_dataframe
+
+from streamlit_extras.row import row
 
 
 class DataFrameParser:
@@ -10,6 +15,7 @@ class DataFrameParser:
 
     def __init__(self, df):
         self._df = df
+        self.rows = row(3)
 
     def process_dataframe(self):
         self._add_column_types()
@@ -22,7 +28,7 @@ class DataFrameParser:
             index = (
                 1 if pd.api.types.is_numeric_dtype(self._df[column_name].dtype) else 0
             )
-            selected_type = st.selectbox(
+            selected_type = self.rows.selectbox(
                 f"Set type for {column_name}",
                 [DataFrameParser.DIMENSION, DataFrameParser.MEASURE],
                 index=index,
@@ -72,8 +78,9 @@ class CsvFileUploader:
 
     def _add_upload_button(self):
         self._csv_file = st.file_uploader("Upload a CSV file", type=["csv"])
-        if st.checkbox("Use sample data"):
-            self._csv_file = self.SAMPLE_DATA
+        if not self._csv_file:
+            if st.toggle("Use sample data"):
+                self._csv_file = self.SAMPLE_DATA
 
     def _parse_csv_file(self):
         if self._csv_file is not None:
@@ -82,8 +89,7 @@ class CsvFileUploader:
     def _init_data_frame_parser(self):
         if self._df is not None:
             DataFrameParser(self._df).process_dataframe()
-            show_data = st.checkbox("Show Data", False)
-            if show_data:
+            with st.expander("Show data"):
                 self._show_data()
 
     def _show_data(self):
@@ -114,7 +120,7 @@ class ChartBuilder:
         "Cat1, Cat2, Value1, Value2",
     ]
 
-    def __init__(self, file_name, df):
+    def __init__(self, file_name, df, filters: str | None):
         self._file_name = file_name
         self._df = df
         self._cat1, self._cat2 = None, None
@@ -124,9 +130,11 @@ class ChartBuilder:
         self._label = None
         self._key = None
         self._presets = self._parse_presets_file()
+        self._filters = filters
         if self._df is not None:
             self._categories, self._values = self._get_columns()
             self._add_title()
+            self.select_rows = row(3)
             self._add_select_buttons()
             self._set_key()
             self._add_show_button()
@@ -145,6 +153,7 @@ class ChartBuilder:
         return categories, values
 
     def _add_select_buttons(self):
+        self._tooltips = st.toggle("Show tooltips", value=True)
         (
             self._cat1,
             self._selected_cat1,
@@ -157,19 +166,19 @@ class ChartBuilder:
             self._value2,
             self._selected_value2,
         ) = self._add_select_buttons_by_type(DataFrameParser.MEASURE)
-        self._label = self._add_label_butto()
+        self._label = self._add_label_button()
 
     def _add_select_buttons_by_type(self, type):
         items1 = self._categories
         if type == DataFrameParser.MEASURE:
             items1 = self._values
-        button1 = st.selectbox(f"Select {type} 1 (mandatory)", items1)
+        button1 = self.select_rows.selectbox(f"Select {type} 1 (mandatory)", items1)
         items2 = [c for c in items1 if c != button1]
         items2.insert(0, None)
-        button2 = st.selectbox(f"Select {type} 2 (optional)", items2)
+        button2 = self.select_rows.selectbox(f"Select {type} 2 (optional)", items2)
         return items1, button1, items2, button2
 
-    def _add_label_butto(self):
+    def _add_label_button(self):
         labels = [None]
         for item in [
             self._selected_cat1,
@@ -179,7 +188,7 @@ class ChartBuilder:
         ]:
             if item is not None:
                 labels.append(item)
-        return st.selectbox("Select Label (optional)", labels)
+        return self.select_rows.selectbox("Select Label (optional)", labels)
 
     def _set_key(self):
         contains = {"Cat1": False, "Cat2": False, "Value1": False, "Value2": False}
@@ -200,37 +209,39 @@ class ChartBuilder:
             return json.load(json_file)
 
     def _add_show_button(self):
-        if st.button("Show Charts"):
-            if self._presets and self._key:
-                if self._key in self._presets:
-                    self._add_charts()
+        if self._presets and self._key:
+            if self._key in self._presets:
+                self._add_charts()
 
     def _add_charts(self):
         data = streamlit_vizzu.Data()
         data.add_df(self._df)
+
         for index in range(0, len(self._presets[self._key]), 2):
             col1, col2 = st.columns(2)
-            self._add_chart(data, index, col1)
+            self._add_chart(data, index, col1, self._filters)
             next_index = index + 1
             if next_index < len(self._presets[self._key]):
-                self._add_chart(data, next_index, col2)
+                self._add_chart(data, next_index, col2, self._filters)
 
-    def _add_chart(self, data, index, col):
+    def _add_chart(self, data, index, col, filters):
         raw_config = self._presets[self._key][index]
         config = self._process_raw_config(raw_config)
         with col:
             self._add_chart_title(raw_config)
-            self._add_chart_animation(index, data, config)
+            self._add_chart_animation(index, data, config, filters)
             self._add_chart_code(config)
 
     def _add_chart_title(self, raw_config):
         st.caption(raw_config["chart"])
 
-    def _add_chart_animation(self, index, data, config):
+    def _add_chart_animation(self, index, data, config, filters):
         chart = streamlit_vizzu.VizzuChart(
             height=300, key=f"vizzu_{self._key}_{index}", use_container_width=True
         )
         chart.animate(data, streamlit_vizzu.Config(config))
+        chart.animate(streamlit_vizzu.Data.filter(filters))
+        chart.feature("tooltip", self._tooltips)
         chart.show()
 
     def _add_chart_code(self, config):
@@ -244,9 +255,13 @@ class ChartBuilder:
                 else:
                     d_types.append(f"'{column}': float")
             code_data = f"d_types={{{', '.join(d_types)}}}\ndf = pd.read_csv('{self._file_name}', dtype=d_types)\ndata = Data()\ndata.add_df(df)\n\n"
-            code_chart = f"chart = VizzuChart()\n\n"
+            code_chart = "chart = VizzuChart()\n\n"
             code_animate = f"chart.animate(data, Config({config}))\n\n"
-            code_show = f"chart.show()\n\n"
+            if self._filters:
+                code_animate += f"chart.animate(Data.filter('{self._filters}'))\n\n"
+            if self._tooltips:
+                code_animate += "chart.feature('tooltip', True)\n\n"
+            code_show = "chart.show()\n\n"
             st.code(
                 code_import + code_data + code_chart + code_animate + code_show,
                 language="python",
@@ -288,21 +303,24 @@ class App:
     def __init__(self):
         self._df = None
         self._file_name = None
-        # st.set_page_config(layout="wide")
+        self._filters = None
+        st.set_page_config(page_title="Vizzu Chart Builder", page_icon="🏗️")
         self._add_title()
         self._init_csv_file_loader()
         self._init_chart_builder()
 
     def _add_title(self):
-        st.title("Vizzu Chart Builder")
+        st.title("🏗️ Vizzu Chart Builder")
 
     def _init_csv_file_loader(self):
         csv_file_uploader = CsvFileUploader()
         self._df = csv_file_uploader.df
         self._file_name = csv_file_uploader.file_name
+        if self._df is not None:
+            self._filters = filter_dataframe(self._df)
 
     def _init_chart_builder(self):
-        ChartBuilder(self._file_name, self._df)
+        ChartBuilder(self._file_name, self._df, self._filters)
 
 
 App()
