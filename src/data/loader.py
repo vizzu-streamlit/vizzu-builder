@@ -29,7 +29,7 @@ class CsvFileUploader:
         return None
 
     def _add_title(self):
-        st.subheader("Create Data")
+        st.subheader("Upload Data")
 
     def _add_upload_button(self):
         self._csv_file = st.file_uploader("Upload a CSV file", type=["csv"])
