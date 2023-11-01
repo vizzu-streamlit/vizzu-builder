@@ -1,4 +1,5 @@
 pandas
 ipyvizzu
+ipyvizzu-story
 streamlit-vizzu
 streamlit-extras
