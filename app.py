@@ -216,54 +216,55 @@ class ChartBuilder:
     def _add_charts(self):
         data = streamlit_vizzu.Data()
         data.add_df(self._df)
+        data.set_filter(self._filters)
 
         for index in range(0, len(self._presets[self._key]), 2):
             col1, col2 = st.columns(2)
-            self._add_chart(data, index, col1, self._filters)
+            self._add_chart(data, index, col1)
             next_index = index + 1
             if next_index < len(self._presets[self._key]):
-                self._add_chart(data, next_index, col2, self._filters)
+                self._add_chart(data, next_index, col2)
 
-    def _add_chart(self, data, index, col, filters):
+    def _add_chart(self, data, index, col):
         raw_config = self._presets[self._key][index]
         config = self._process_raw_config(raw_config)
         with col:
             self._add_chart_title(raw_config)
-            self._add_chart_animation(index, data, config, filters)
+            self._add_chart_animation(index, data, config)
             self._add_chart_code(config)
 
     def _add_chart_title(self, raw_config):
         st.caption(raw_config["chart"])
 
-    def _add_chart_animation(self, index, data, config, filters):
+    def _add_chart_animation(self, index, data, config):
         chart = streamlit_vizzu.VizzuChart(
             height=300, key=f"vizzu_{self._key}_{index}", use_container_width=True
         )
         chart.animate(data, streamlit_vizzu.Config(config))
-        chart.animate(streamlit_vizzu.Data.filter(filters))
         chart.feature("tooltip", self._tooltips)
         chart.show()
 
     def _add_chart_code(self, config):
         show_code = st.expander("Show code")
         with show_code:
-            code_import = "from streamlit_vizzu import VizzuChart, Data, Config\nimport pandas as pd\n\n"
+            code = "from streamlit_vizzu import VizzuChart, Data, Config\nimport pandas as pd\n\n"
             d_types = []
             for column in self._df.columns:
                 if self._df[column].dtype == object:
-                    d_types.append(f"'{column}': str")
+                    d_types.append(f'"{column}": str')
                 else:
-                    d_types.append(f"'{column}': float")
-            code_data = f"d_types={{{', '.join(d_types)}}}\ndf = pd.read_csv('{self._file_name}', dtype=d_types)\ndata = Data()\ndata.add_df(df)\n\n"
-            code_chart = "chart = VizzuChart()\n\n"
-            code_animate = f"chart.animate(data, Config({config}))\n\n"
-            if self._filters:
-                code_animate += f"chart.animate(Data.filter('{self._filters}'))\n\n"
+                    d_types.append(f'"{column}": float')
+            code += f'd_types={{{", ".join(d_types)}}}\ndf = pd.read_csv("{self._file_name}", dtype=d_types)\ndata = Data()\ndata.add_df(df)\n'
+            code += "\n"
+            code += "chart = VizzuChart()\n"
             if self._tooltips:
-                code_animate += "chart.feature('tooltip', True)\n\n"
-            code_show = "chart.show()\n\n"
+                code += "chart.feature('tooltip', True)\n"
+            code += f"chart.animate(data)\n"
+            filters = f'Data.filter("{self._filters}"), ' if self._filters else ""
+            code += f"chart.animate({filters}Config({config}))\n"
+            code += "chart.show()\n\n"
             st.code(
-                code_import + code_data + code_chart + code_animate + code_show,
+                code,
                 language="python",
             )
 
