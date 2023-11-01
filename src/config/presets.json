@@ -684,7 +684,7 @@
             "split": null,
             "align": "stretch",
             "orientation": "vertical",
-            "y_range_min": null,
+            "y_range_min": "-50%",
             "y_range_max": null
         },
         {

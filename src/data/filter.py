@@ -3,7 +3,7 @@ from __future__ import annotations
 import streamlit as st
 import pandas as pd
 from pandas.api.types import (
-    is_categorical_dtype,
+    CategoricalDtype,
     is_datetime64_any_dtype,
     is_numeric_dtype,
     is_object_dtype,
@@ -48,7 +48,10 @@ def filter_dataframe(df: pd.DataFrame) -> str | None:
         rows = row(2)
         for column in to_filter_columns:
             # Treat columns with < 10 unique values as categorical
-            if is_categorical_dtype(df[column]) or df[column].nunique() < 10:
+            if (
+                isinstance(df[column].dtype, CategoricalDtype)
+                or df[column].nunique() < 10
+            ):
                 user_cat_input = rows.multiselect(
                     f"Values for {column}",
                     df[column].unique(),
