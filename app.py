@@ -153,6 +153,7 @@ class ChartBuilder:
         return categories, values
 
     def _add_select_buttons(self):
+        self._tooltips = st.toggle("Show tooltips", value=True)
         (
             self._cat1,
             self._selected_cat1,
@@ -215,7 +216,6 @@ class ChartBuilder:
     def _add_charts(self):
         data = streamlit_vizzu.Data()
         data.add_df(self._df)
-        # filters = filter_dataframe(self._df)
 
         for index in range(0, len(self._presets[self._key]), 2):
             col1, col2 = st.columns(2)
@@ -241,6 +241,7 @@ class ChartBuilder:
         )
         chart.animate(data, streamlit_vizzu.Config(config))
         chart.animate(streamlit_vizzu.Data.filter(filters))
+        chart.feature("tooltip", self._tooltips)
         chart.show()
 
     def _add_chart_code(self, config):
@@ -258,6 +259,8 @@ class ChartBuilder:
             code_animate = f"chart.animate(data, Config({config}))\n\n"
             if self._filters:
                 code_animate += f"chart.animate(Data.filter('{self._filters}'))\n\n"
+            if self._tooltips:
+                code_animate += "chart.feature('tooltip', True)\n\n"
             code_show = "chart.show()\n\n"
             st.code(
                 code_import + code_data + code_chart + code_animate + code_show,
