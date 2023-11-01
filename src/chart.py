@@ -54,13 +54,13 @@ class ChartBuilder:
             self._cat2,
             self._selected_cat2,
         ) = self._add_select_buttons_by_type(DataFrameParser.DIMENSION)
+        self._label = self._add_label_button()
         (
             self._value1,
             self._selected_value1,
             self._value2,
             self._selected_value2,
         ) = self._add_select_buttons_by_type(DataFrameParser.MEASURE)
-        self._label = self._add_label_button()
 
     def _add_select_buttons_by_type(self, type):
         items1 = self._categories
