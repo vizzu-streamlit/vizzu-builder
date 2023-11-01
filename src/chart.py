@@ -27,7 +27,7 @@ class ChartBuilder:
         self._key = None
         self._presets = self._parse_presets_file()
         self._filters = filters
-        self._story_builder = StoryBuilder(self._df)
+        self._story_builder = StoryBuilder(self._file_name, self._df)
         if self._df is not None:
             self._categories, self._values = self._get_columns()
             self._add_title()
