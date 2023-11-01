@@ -211,7 +211,8 @@ class ChartBuilder:
     def _add_show_button(self):
         if self._presets and self._key:
             if self._key in self._presets:
-                self._add_charts()
+                if st.button("Show charts"):
+                    self._add_charts()
 
     def _add_charts(self):
         data = streamlit_vizzu.Data()

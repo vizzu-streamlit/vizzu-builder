@@ -85,7 +85,6 @@ def filter_dataframe(df: pd.DataFrame) -> str | None:
                 if len(user_date_input) == 2:
                     user_date_input = tuple(map(pd.to_datetime, user_date_input))
                     start_date, end_date = user_date_input
-                    # df = df.loc[df[column].between(start_date, end_date)]
                     filters.append(
                         f"record['{column}'] <= '{end_date}' "
                         f"&& record['{column}'] >= '{start_date}'"
@@ -96,9 +95,6 @@ def filter_dataframe(df: pd.DataFrame) -> str | None:
                 )
                 if user_text_input:
                     filters.append(f"record['{column}'].includes('{user_text_input}')")
-                    # df = df[df[column].astype(str).str.contains(user_text_input)]
-
-                # raise NotImplementedError("Cannot filter on this column currently")
 
     filters_wrapped = [f"({_f})" for _f in filters]
 
