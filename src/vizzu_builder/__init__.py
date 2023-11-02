@@ -7,9 +7,6 @@ from .data.loader import CsvFileUploader
 from .data.filter import DataFrameFilter
 from .chart import ChartBuilder
 
-if "filters" not in st.session_state:
-    st.session_state["filters"] = None
-
 
 class App:
     # pylint: disable=too-few-public-methods

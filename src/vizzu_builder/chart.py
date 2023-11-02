@@ -13,6 +13,10 @@ from .data.parser import DataFrameParser
 from .story import StoryBuilder
 
 
+if "filters" not in st.session_state:
+    st.session_state["filters"] = None
+
+
 @dataclass
 class ChartConfig:
     # pylint: disable=too-many-instance-attributes
