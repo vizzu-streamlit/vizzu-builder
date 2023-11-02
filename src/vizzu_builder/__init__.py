@@ -4,7 +4,7 @@ from __future__ import annotations
 import streamlit as st
 
 from .data.loader import CsvFileUploader
-from .data.filter import filter_dataframe
+from .data.filter import DataFrameFilter
 from .chart import ChartBuilder
 
 if "filters" not in st.session_state:
@@ -30,7 +30,7 @@ class App:
         self._file_name = csv_file_uploader.file_name
         self._df = csv_file_uploader.df
         if self._df is not None:
-            filter_dataframe(self._df)
+            DataFrameFilter(self._df)
 
     def _init_builders(self):
         ChartBuilder(self._file_name, self._df)
