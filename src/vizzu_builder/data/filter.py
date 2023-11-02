@@ -1,7 +1,5 @@
 # pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring
 
-from __future__ import annotations
-
 import streamlit as st
 import pandas as pd
 from pandas.api.types import (
@@ -10,13 +8,13 @@ from pandas.api.types import (
     is_numeric_dtype,
     is_object_dtype,
 )
-from streamlit_extras.row import row
+from streamlit_extras.row import row  # type: ignore
 
 
 class DataFrameFilter:
     # pylint: disable=too-few-public-methods
 
-    def __init__(self, df) -> None:
+    def __init__(self, df: pd.DataFrame) -> None:
         self._df = df.copy()
         self._filters: list[str] = []
         modify = st.toggle("Add filters")
@@ -24,7 +22,7 @@ class DataFrameFilter:
             self._convert_datetimes()
             self._set_filters()
 
-    def _set_filters(self):
+    def _set_filters(self) -> None:
         modification_container = st.container()
         with modification_container:
             to_filter_columns = st.multiselect("Filter dataframe on", self._df.columns)
@@ -91,12 +89,12 @@ class DataFrameFilter:
                     # raise NotImplementedError("Cannot filter on this column currently")
 
         filters_wrapped = [f"({_f})" for _f in self._filters]
-        self._filters = " && ".join(filters_wrapped) if filters_wrapped else None
-
         if st.button("Update data"):
-            st.session_state["filters"] = self._filters
+            st.session_state["filters"] = (
+                " && ".join(filters_wrapped) if filters_wrapped else None
+            )
 
-    def _convert_datetimes(self):
+    def _convert_datetimes(self) -> None:
         # Try to convert datetimes into a standard format (datetime, no timezone)
         for col in self._df.columns:
             if is_object_dtype(self._df[col]):

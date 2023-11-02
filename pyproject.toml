@@ -54,7 +54,10 @@ docs = [
 
 [tool.pylint.messages-control]
 disable = ["fixme"]
-good-names= ["i", "df"]
+good-names = ["i", "df"]
+
+[tool.mypy]
+disable_error_code = ["type-arg"]
 
 [tool.pdm.scripts]
 lock = "pdm lock -d"
@@ -72,8 +75,8 @@ lint-pylint = "pylint"
 
 lint = {composite = ["lint-pylint src tools"]}
 
-type-mypy = "mypy"
+type-mypy = "mypy --strict"
 
 type = {composite = ["type-mypy src tools"]}
 
-ci = {composite = ["format", "lint"]}
+ci = {composite = ["format", "lint", "type"]}

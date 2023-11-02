@@ -4,9 +4,10 @@ from dataclasses import dataclass, field
 import json
 from pathlib import Path
 import black
-import streamlit_vizzu
+import pandas as pd
+import streamlit_vizzu  # type: ignore
 import streamlit as st
-from streamlit_extras.row import row
+from streamlit_extras.row import row  # type: ignore
 
 from .data.generator import DataCodeGenerator
 from .data.parser import DataFrameParser
@@ -17,20 +18,20 @@ from .story import StoryBuilder
 class ChartConfig:
     # pylint: disable=too-many-instance-attributes
 
-    categories = None
-    values = None
-    cat1 = None
-    selected_cat1 = None
-    cat2 = None
-    selected_cat2 = None
-    value1 = None
-    selected_value1 = None
-    value2 = None
-    selected_value2 = None
+    categories: list[str | None] = field(default_factory=list)
+    values: list[str | None] = field(default_factory=list)
+    cat1: list[str | None] = field(default_factory=list)
+    cat2: list[str | None] = field(default_factory=list)
+    selected_cat1: str | None = None
+    selected_cat2: str | None = None
+    value1: list[str | None] = field(default_factory=list)
+    value2: list[str | None] = field(default_factory=list)
+    selected_value1: str | None = None
+    selected_value2: str | None = None
     label = None
     tooltips = True
-    key = None
-    keys: list = field(
+    key: str | None = None
+    keys: list[str] = field(
         default_factory=lambda: [
             "Cat1, Value1",
             "Cat1, Value1, Value2",
@@ -43,7 +44,7 @@ class ChartConfig:
 class ChartBuilder:
     # pylint: disable=too-few-public-methods
 
-    def __init__(self, file_name, df):
+    def __init__(self, file_name: str | None, df: pd.DataFrame | None) -> None:
         self._file_name = file_name
         self._df = df
         if self._df is not None:
@@ -65,20 +66,21 @@ class ChartBuilder:
             self._add_charts()
             self._add_story()
 
-    def _add_title(self):
+    def _add_title(self) -> None:
         st.subheader("Create Chart")
 
-    def _get_columns(self):
-        categories = []
-        values = []
-        for column_name in self._df.columns:
-            if self._df[column_name].dtype == object:
-                categories.append(column_name)
-            else:
-                values.append(column_name)
+    def _get_columns(self) -> tuple[list[str | None], list[str | None]]:
+        categories: list[str | None] = []
+        values: list[str | None] = []
+        if self._df is not None:
+            for column_name in self._df.columns:
+                if self._df[column_name].dtype == object:
+                    categories.append(column_name)
+                else:
+                    values.append(column_name)
         return categories, values
 
-    def _add_select_buttons(self):
+    def _add_select_buttons(self) -> None:
         self._add_tooltip_button()
         (
             self._config.cat1,
@@ -94,10 +96,12 @@ class ChartBuilder:
         ) = self._add_select_buttons_by_type(DataFrameParser.MEASURE)
         self._add_label_button()
 
-    def _add_select_buttons_by_type(self, column_type):
-        items1 = self._config.categories
+    def _add_select_buttons_by_type(
+        self, column_type: str
+    ) -> tuple[list[str | None], str | None, list[str | None], str | None]:
+        items1 = self._config.categories.copy()
         if column_type == DataFrameParser.MEASURE:
-            items1 = self._config.values
+            items1 = self._config.values.copy()
         button1 = self.select_rows.selectbox(
             f"Select {column_type} 1 (mandatory)", items1
         )
@@ -108,8 +112,8 @@ class ChartBuilder:
         )
         return items1, button1, items2, button2
 
-    def _add_label_button(self):
-        labels = [None]
+    def _add_label_button(self) -> None:
+        labels: list[str | None] = [None]
         for item in [
             self._config.selected_cat1,
             self._config.selected_cat2,
@@ -122,11 +126,11 @@ class ChartBuilder:
             "Select Label (optional)", labels
         )
 
-    def _add_tooltip_button(self):
+    def _add_tooltip_button(self) -> None:
         self._config.tooltips = st.toggle("Show tooltips", value=True)
         self._story_builder.set_tooltip(self._config.tooltips)
 
-    def _set_key(self):
+    def _set_key(self) -> None:
         contains = {"Cat1": False, "Cat2": False, "Value1": False, "Value2": False}
         if self._config.selected_cat1 is not None:
             contains["Cat1"] = True
@@ -140,12 +144,14 @@ class ChartBuilder:
         if self._config.key not in self._config.keys:
             st.warning("Please select at least one category and one value!")
 
-    def _parse_presets_file(self):
-        presets = Path(__file__).parent / "config/presets.json"
-        with open(presets, "r", encoding="utf8") as json_file:
-            return json.load(json_file)
+    def _parse_presets_file(self) -> dict:
+        presets_file = Path(__file__).parent / "config/presets.json"
+        presets = {}
+        with open(presets_file, "r", encoding="utf8") as json_file:
+            presets = json.load(json_file)
+        return presets
 
-    def _add_charts(self):
+    def _add_charts(self) -> None:
         if self._presets and self._config.key:
             if self._config.key in self._presets:
                 data = streamlit_vizzu.Data()
@@ -154,24 +160,27 @@ class ChartBuilder:
 
                 for index in range(0, len(self._presets[self._config.key]), 2):
                     col1, col2 = st.columns(2)
-                    self._add_chart(data, index, col1)
-                    next_index = index + 1
-                    if next_index < len(self._presets[self._config.key]):
-                        self._add_chart(data, next_index, col2)
+                    with col1:
+                        self._add_chart(data, index)
+                    with col2:
+                        next_index = index + 1
+                        if next_index < len(self._presets[self._config.key]):
+                            self._add_chart(data, next_index)
 
-    def _add_chart(self, data, index, col):
+    def _add_chart(self, data: streamlit_vizzu.Data, index: int) -> None:
         raw_config = self._presets[self._config.key][index]
         config = self._process_raw_config(raw_config)
-        with col:
-            self._add_chart_title(raw_config)
-            self._add_chart_animation(index, data, config)
-            self._add_chart_code(config)
-            self._add_save_button(config)
+        self._add_chart_title(raw_config)
+        self._add_chart_animation(index, data, config)
+        self._add_chart_code(config)
+        self._add_save_button(config)
 
-    def _add_chart_title(self, raw_config):
+    def _add_chart_title(self, raw_config: dict) -> None:
         st.subheader(raw_config["chart"])
 
-    def _add_chart_animation(self, index, data, config):
+    def _add_chart_animation(
+        self, index: int, data: streamlit_vizzu.Data, config: dict
+    ) -> None:
         chart = streamlit_vizzu.VizzuChart(
             height=300,
             key=f"vizzu_{self._config.key}_{index}",
@@ -181,7 +190,7 @@ class ChartBuilder:
         chart.feature("tooltip", self._config.tooltips)
         chart.show()
 
-    def _add_chart_code(self, config):
+    def _add_chart_code(self, config: dict) -> None:
         show_code = st.expander("Show code")
         with show_code:
             code = []
@@ -202,12 +211,14 @@ class ChartBuilder:
                 language="python",
             )
 
-    def _add_save_button(self, config):
-        button = st.button("Add Chart to Story", key=config, use_container_width=True)
+    def _add_save_button(self, config: dict) -> None:
+        button = st.button(
+            "Add Chart to Story", key=str(config), use_container_width=True
+        )
         if button:
             self._story_builder.add_slide(self._filters, config)
 
-    def _process_raw_config(self, raw_config):
+    def _process_raw_config(self, raw_config: dict) -> dict:
         config = {}
         for key, value in raw_config.items():
             if key not in ["chart", "y_range_min", "y_range_max"] and value is not None:
@@ -230,7 +241,7 @@ class ChartBuilder:
             config["label"] = self._config.label
         return config
 
-    def _replace_config(self, value):
+    def _replace_config(self, value: str | list[str]) -> str | list[str]:
         if isinstance(value, str):
             value = value.replace("Cat1", self._config.selected_cat1 or "")
             value = value.replace("Cat2", self._config.selected_cat2 or "")
@@ -238,5 +249,5 @@ class ChartBuilder:
             value = value.replace("Value2", self._config.selected_value2 or "")
         return value
 
-    def _add_story(self):
+    def _add_story(self) -> None:
         self._story_builder.play()
