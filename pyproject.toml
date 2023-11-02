@@ -32,6 +32,9 @@ app = [
     "pandas",
     "streamlit-extras",
 ]
+stubs = [
+    "pandas-stubs",
+]
 codequality = [
     "black",
     "pylint",
