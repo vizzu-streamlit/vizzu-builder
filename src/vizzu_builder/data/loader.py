@@ -38,8 +38,25 @@ class CsvFileUploader:
     def _add_upload_button(self) -> None:
         self._csv_file = st.file_uploader("Upload a CSV file", type=["csv"])  # type: ignore
         if not self._csv_file:
-            if st.toggle("Use sample data"):
-                self._csv_file = self.SAMPLE_DATA
+            self._add_sample_data()
+
+    def _add_sample_data(self) -> None:
+        if st.toggle("Use sample data"):
+            self._csv_file = self.SAMPLE_DATA
+            st.download_button(
+                label="Download CSV",
+                data=self._read_sample_data(),
+                file_name=Path(self.SAMPLE_DATA).name,
+                mime="text/csv",
+            )
+
+    def _read_sample_data(self) -> str:
+        with open(
+            self.SAMPLE_DATA,
+            "r",
+            encoding="utf8",
+        ) as csv:
+            return csv.read()
 
     def _parse_csv_file(self) -> None:
         if self._csv_file is not None:

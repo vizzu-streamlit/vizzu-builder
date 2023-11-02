@@ -30,8 +30,8 @@ class ChartConfig:
     value2: list[str | None] = field(default_factory=list)
     selected_value1: str | None = None
     selected_value2: str | None = None
-    label = None
-    tooltips = True
+    label: str | None = None
+    tooltips: bool = True
     key: str | None = None
     keys: list[str] = field(
         default_factory=lambda: [
