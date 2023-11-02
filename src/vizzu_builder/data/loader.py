@@ -3,7 +3,7 @@
 from pathlib import Path
 import pandas as pd
 import streamlit as st
-from src.data.parser import DataFrameParser
+from .parser import DataFrameParser
 
 
 class CsvFileUploader:

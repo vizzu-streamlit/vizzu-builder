@@ -7,7 +7,7 @@ from ipyvizzustory.env.st.story import Story
 from ipyvizzustory import Slide, Step
 from ipyvizzu import Config, Data
 
-from src.data.generator import DataCodeGenerator
+from .data.generator import DataCodeGenerator
 
 
 def delete_last_slide():
@@ -66,6 +66,7 @@ class StoryBuilder:
 
     def play(self):
         if "story" in st.session_state and st.session_state.story["slides"]:
+            st.subheader("Create Story")
             st.session_state.story.play()
             rows = row(2)
             self._add_delete_button(rows)

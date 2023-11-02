@@ -2,14 +2,15 @@
 
 from dataclasses import dataclass, field
 import json
+from pathlib import Path
 import black
 import streamlit_vizzu
 import streamlit as st
 from streamlit_extras.row import row
 
-from src.data.generator import DataCodeGenerator
-from src.data.parser import DataFrameParser
-from src.story import StoryBuilder
+from .data.generator import DataCodeGenerator
+from .data.parser import DataFrameParser
+from .story import StoryBuilder
 
 
 @dataclass
@@ -136,7 +137,8 @@ class ChartBuilder:
             st.warning("Please select at least one category and one value!")
 
     def _parse_presets_file(self):
-        with open("src/config/presets.json", "r", encoding="utf8") as json_file:
+        presets = Path(__file__).parent / "config/presets.json"
+        with open(presets, "r", encoding="utf8") as json_file:
             return json.load(json_file)
 
     def _add_charts(self):

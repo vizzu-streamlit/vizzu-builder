@@ -70,8 +70,8 @@ format = {composite = ["format-black app.py src tools", "format-mdformat README.
 
 lint-pylint = "pylint"
 
-lint = {composite = ["lint-pylint app.py src tools"]}
+lint = {composite = ["lint-pylint src tools"]}
 
 type-mypy = "mypy"
 
-type = {composite = ["type-mypy app.py src tools"]}
+type = {composite = ["type-mypy src tools"]}
