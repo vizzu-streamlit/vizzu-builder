@@ -1,9 +1,13 @@
+# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring
+
 import black
 import streamlit as st
 from streamlit_extras.row import row
 from ipyvizzustory.env.st.story import Story
 from ipyvizzustory import Slide, Step
 from ipyvizzu import Config, Data
+
+from src.data.generator import DataCodeGenerator
 
 
 def delete_last_slide():
@@ -52,12 +56,12 @@ class StoryBuilder:
 
     def add_slide(self, filters, config):
         if "story" in st.session_state and "story_code" in st.session_state:
-            normalized_config = self._normalize_config(config)
+            whole_config = self._process_config(config)
             st.session_state.story.add_slide(
-                Slide(Step(Data.filter(filters), Config(normalized_config)))
+                Slide(Step(Data.filter(filters), Config(whole_config)))
             )
             st.session_state.story_code.append(
-                f"story.add_slide(Slide(Step(Data.filter({filters}), Config({normalized_config}))))"
+                f'story.add_slide(Slide(Step(Data.filter("{filters}"), Config({whole_config}))))'
             )
 
     def play(self):
@@ -103,16 +107,7 @@ class StoryBuilder:
             code.append("import pandas as pd")
             code.append("from ipyvizzu import Config, Data")
             code.append("from ipyvizzustory import Story, Slide, Step")
-            d_types = []
-            for column in self._df.columns:
-                if self._df[column].dtype == object:
-                    d_types.append(f'"{column}": str')
-                else:
-                    d_types.append(f'"{column}": float')
-            code.append(f'd_types={{{", ".join(d_types)}}}')
-            code.append(f'df = pd.read_csv("{self._file_name}", dtype=d_types)')
-            code.append("data = Data()")
-            code.append("data.add_df(df)\n")
+            code += DataCodeGenerator.get_data_code(self._file_name, self._df)
             code.append("story = Story(data)")
             code.append(f"story.set_size({self._width}, {self._height})")
             code.append(f'story.set_feature("tooltip", {self._tooltip})\n')
@@ -121,35 +116,34 @@ class StoryBuilder:
             )
             formatted_code = black.format_str(unformatted_code, mode=black.FileMode())
             return formatted_code
+        return ""
 
-    def _normalize_config(self, config):
-        normalized_config = {}
-        normalized_config["x"] = None if "x" not in config else config["x"]
+    def _process_config(self, config):
+        whole_config = {}
+        whole_config["x"] = None if "x" not in config else config["x"]
 
         y_set = config.get("y", {}).get("set", None)
         y_range_min = config.get("y", {}).get("range", {}).get("min", "auto")
         y_range_max = config.get("y", {}).get("range", {}).get("max", "auto")
-        normalized_config["y"] = {
+        whole_config["y"] = {
             "set": y_set,
             "range": {"min": y_range_min, "max": y_range_max},
         }
 
-        normalized_config["color"] = None if "color" not in config else config["color"]
-        normalized_config["lightness"] = (
+        whole_config["color"] = None if "color" not in config else config["color"]
+        whole_config["lightness"] = (
             None if "lightness" not in config else config["lightness"]
         )
-        normalized_config["size"] = None if "size" not in config else config["size"]
-        normalized_config["noop"] = None if "noop" not in config else config["noop"]
+        whole_config["size"] = None if "size" not in config else config["size"]
+        whole_config["noop"] = None if "noop" not in config else config["noop"]
 
-        normalized_config["split"] = False if "split" not in config else config["split"]
-        normalized_config["align"] = (
-            "none" if "align" not in config else config["align"]
-        )
+        whole_config["split"] = False if "split" not in config else config["split"]
+        whole_config["align"] = "none" if "align" not in config else config["align"]
 
-        normalized_config["coordSystem"] = config["coordSystem"]
-        normalized_config["geometry"] = config["geometry"]
-        normalized_config["orientation"] = (
+        whole_config["coordSystem"] = config["coordSystem"]
+        whole_config["geometry"] = config["geometry"]
+        whole_config["orientation"] = (
             "horizontal" if "orientation" not in config else config["orientation"]
         )
 
-        return normalized_config
+        return whole_config

@@ -1,0 +1,77 @@
+[project]
+name = "vizzu-builder"
+version = "0.1.0"
+description = "Vizzu Builder is a powerful Streamlit app designed to simplify the process of creating stunning data visualizations and interactive data stories."
+authors = [
+    {name = "Vizzu Inc.", email = "hello@vizzuhq.com"},
+]
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+
+[project.urls]
+Homepage = "https://vizzu-builder.streamlit.app/"
+Documentation = "https://github.com/vizzu-streamlit/vizzu-builder"
+Source = "https://github.com/vizzu-streamlit/vizzu-builder"
+Tracker = "https://github.com/vizzu-streamlit/vizzu-builder/issues"
+
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[tool.pdm.dev-dependencies]
+tools = [
+    "pdm",
+]
+app = [
+    "ipyvizzu<=0.17.0",
+    "ipyvizzu-story<=0.10.0",
+    "streamlit-vizzu<=0.2.0",
+    "black",
+    "pandas",
+    "streamlit-extras",
+]
+codequality = [
+    "black",
+    "pylint",
+    "mypy",
+]
+docs = [
+    "mdformat",
+    "mdformat-beautysh",
+    "mdformat-black",
+    "mdformat-configurable-black",
+    "mdformat-config",
+    "mdformat-web",
+    "mdformat-admon",
+    "mdformat-gfm",
+    "mdformat-tables",
+    "mdformat-footnote",
+    "mdformat-frontmatter",
+    "mdx_truly_sane_lists",
+]
+
+[tool.pylint.messages-control]
+disable = ["fixme"]
+good-names= ["i", "df"]
+
+[tool.pdm.scripts]
+lock = "pdm lock -d"
+install = "pdm install"
+
+format-fix-black = "black"
+format-black = "black --diff --check"
+format-fix-mdformat = "python ./tools/ci/std_check.py mdformat --wrap 80 --end-of-line keep --line-length 70"
+format-mdformat = "python ./tools/ci/std_check.py mdformat --wrap 80 --end-of-line keep --line-length 70 --check"
+
+format-fix = {composite = ["format-fix-black src tools", "format-fix-mdformat README.md CONTRIBUTING.md CODE_OF_CONDUCT.md"]}
+format = {composite = ["format-black app.py src tools", "format-mdformat README.md CONTRIBUTING.md CODE_OF_CONDUCT.md"]}
+
+lint-pylint = "pylint"
+
+lint = {composite = ["lint-pylint app.py src tools"]}
+
+type-mypy = "mypy"
+
+type = {composite = ["type-mypy app.py src tools"]}

@@ -1,3 +1,5 @@
+# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring
+
 from pathlib import Path
 import pandas as pd
 import streamlit as st

@@ -1,6 +1,6 @@
+ipyvizzu<=0.17.0
+ipyvizzu-story<=0.10.0
+streamlit-vizzu<=0.2.0
 black
 pandas
-ipyvizzu
-ipyvizzu-story
-streamlit-vizzu
 streamlit-extras

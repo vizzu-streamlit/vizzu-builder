@@ -1,3 +1,5 @@
+# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring
+
 from __future__ import annotations
 
 import streamlit as st
@@ -15,15 +17,6 @@ if "filters" not in st.session_state:
 
 
 def filter_dataframe(df: pd.DataFrame) -> str | None:
-    """
-    Adds a UI on top of a dataframe to let viewers filter columns
-
-    Args:
-        df (pd.DataFrame): Original dataframe
-
-    Returns:
-        pd.DataFrame: Filtered dataframe
-    """
     modify = st.toggle("Add filters")
 
     if not modify:

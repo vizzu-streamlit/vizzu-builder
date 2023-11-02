@@ -1,8 +1,12 @@
+# pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring
+
 import pandas as pd
 from streamlit_extras.row import row
 
 
 class DataFrameParser:
+    # pylint: disable=too-few-public-methods
+
     DIMENSION = "Category"
     MEASURE = "Value"
 
