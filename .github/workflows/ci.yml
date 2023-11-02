@@ -9,20 +9,20 @@ on:
 jobs:
     check:
         runs-on: ubuntu-22.04
-    
+
         steps:
             -   name: Checkout repo
                 uses: actions/checkout@v3
                 with:
                     fetch-depth: 1
-    
+
             -   name: Cache dev environment
                 id: cache_dev_ubuntu22
                 uses: actions/cache@v3
                 with:
                     path: .venv
                     key: cache_dev_ubuntu22_${{ hashFiles('pdm.lock') }}
-            
+
             -   name: Init dev environment
                 if: steps.cache_dev_ubuntu22.outputs.cache-hit != 'true'
                 run: |
@@ -30,13 +30,18 @@ jobs:
                     source .venv/bin/activate
                     pip install pdm
                     pdm run install
-    
+
             -   name: Format
                 run: |
                     source .venv/bin/activate
                     pdm run format
-    
+
             -   name: Lint
                 run: |
                     source .venv/bin/activate
                     pdm run lint
+
+            -   name: Type
+                run: |
+                    source .venv/bin/activate
+                    pdm run type
