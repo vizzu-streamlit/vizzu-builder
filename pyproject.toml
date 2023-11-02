@@ -75,3 +75,5 @@ lint = {composite = ["lint-pylint src tools"]}
 type-mypy = "mypy"
 
 type = {composite = ["type-mypy src tools"]}
+
+ci = {composite = ["format", "lint"]}

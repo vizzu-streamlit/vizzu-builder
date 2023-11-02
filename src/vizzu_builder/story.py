@@ -10,12 +10,8 @@ from ipyvizzu import Config, Data
 from .data.generator import DataCodeGenerator
 
 
-if "df" not in st.session_state:
-    st.session_state["df"] = None
 if "story_code" not in st.session_state:
     st.session_state["story_code"] = []
-if "story" not in st.session_state:
-    st.session_state["story"] = None
 
 
 class StoryBuilder:
@@ -27,9 +23,9 @@ class StoryBuilder:
         self._start_slide = -2
         self._tooltip = True
         if df is not None:
-            if st.session_state.story is None:
+            if "df" not in st.session_state:
                 st.session_state.df = df
-            if st.session_state.story is None or not st.session_state.df.equals(df):
+            if "story" not in st.session_state or not st.session_state.df.equals(df):
                 data = Data()
                 data.add_df(df)
                 st.session_state.story = Story(data=data)
@@ -38,20 +34,20 @@ class StoryBuilder:
                 st.session_state.story_code = []
 
     def set_start_slide(self, index):
-        if st.session_state.story is not None:
+        if "story" in st.session_state:
             st.session_state.story.start_slide = index
 
     def set_size(self, width, height):
-        if st.session_state.story is not None:
+        if "story" in st.session_state:
             st.session_state.story.set_size(width, height)
 
     def set_tooltip(self, tooltip):
-        if st.session_state.story is not None:
+        if "story" in st.session_state:
             st.session_state.story.set_feature("tooltip", tooltip)
             self._tooltip = tooltip
 
     def add_slide(self, filters, config):
-        if st.session_state.story is not None:
+        if "story" in st.session_state:
             whole_config = self._process_config(config)
             st.session_state.story.add_slide(
                 Slide(Step(Data.filter(filters), Config(whole_config)))
@@ -63,7 +59,7 @@ class StoryBuilder:
     @staticmethod
     def delete_last_slide():
         if (
-            st.session_state.story is not None
+            "story" in st.session_state
             and st.session_state.story["slides"]
             and st.session_state.story_code
         ):
@@ -71,7 +67,7 @@ class StoryBuilder:
             st.session_state.story_code.pop()
 
     def play(self):
-        if st.session_state.story is not None and st.session_state.story["slides"]:
+        if "story" in st.session_state and st.session_state.story["slides"]:
             st.subheader("Create Story")
             st.session_state.story.play()
             rows = row(2)
@@ -80,7 +76,7 @@ class StoryBuilder:
             self._add_show_code_button()
 
     def _add_delete_button(self, rows):
-        if st.session_state.story is not None and st.session_state.story["slides"]:
+        if "story" in st.session_state and st.session_state.story["slides"]:
             rows.button(
                 "Delete last Slide",
                 use_container_width=True,
@@ -88,7 +84,7 @@ class StoryBuilder:
             )
 
     def _add_download_button(self, rows):
-        if st.session_state.story is not None:
+        if "story" in st.session_state:
             self.set_start_slide(0)
             rows.download_button(
                 label="Download Story",
@@ -100,7 +96,7 @@ class StoryBuilder:
             self.set_start_slide(self._start_slide)
 
     def _add_show_code_button(self):
-        if st.session_state.story is not None and st.session_state.story_code:
+        if "story" in st.session_state and st.session_state.story_code:
             show_code = st.expander("Show code")
             with show_code:
                 st.code(
@@ -109,7 +105,7 @@ class StoryBuilder:
                 )
 
     def _get_code(self):
-        if st.session_state.story is not None and st.session_state.story_code:
+        if "story" in st.session_state and st.session_state.story_code:
             code = []
             code.append("import pandas as pd")
             code.append("from ipyvizzu import Config, Data")

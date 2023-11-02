@@ -12,9 +12,6 @@ from pandas.api.types import (
 )
 from streamlit_extras.row import row
 
-if "filters" not in st.session_state:
-    st.session_state["filters"] = None
-
 
 class DataFrameFilter:
     # pylint: disable=too-few-public-methods

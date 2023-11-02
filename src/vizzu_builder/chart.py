@@ -13,10 +13,6 @@ from .data.parser import DataFrameParser
 from .story import StoryBuilder
 
 
-if "filters" not in st.session_state:
-    st.session_state["filters"] = None
-
-
 @dataclass
 class ChartConfig:
     # pylint: disable=too-many-instance-attributes
@@ -51,7 +47,11 @@ class ChartBuilder:
         self._file_name = file_name
         self._df = df
         if self._df is not None:
-            self._filters = st.session_state["filters"]
+            self._filters = (
+                None
+                if "filters" not in st.session_state
+                else st.session_state["filters"]
+            )
             self._presets = self._parse_presets_file()
             self._config = ChartConfig()
             self._config.categories, self._config.values = self._get_columns()
