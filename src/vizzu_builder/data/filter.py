@@ -1,5 +1,7 @@
 # pylint: disable=missing-module-docstring,missing-class-docstring,missing-function-docstring
 
+from __future__ import annotations
+
 import streamlit as st
 import pandas as pd
 from pandas.api.types import (
