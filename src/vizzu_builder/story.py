@@ -23,7 +23,7 @@ class StoryBuilder:
         self._df = df
         self._width = 640
         self._height = 320
-        self._start_slide = -2
+        self._start_slide = -1
         self._tooltip = True
         if self._df is not None:
             if "df" not in st.session_state:
