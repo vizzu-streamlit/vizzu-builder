@@ -18,6 +18,7 @@ if "story_code" not in st.session_state:
 
 
 class StoryBuilder:
+    deletableSlide = None
     def __init__(self, file_name: str | None, df: pd.DataFrame | None) -> None:
         self._file_name = file_name
         self._df = df
@@ -69,8 +70,8 @@ class StoryBuilder:
             and st.session_state.story["slides"]
             and st.session_state.story_code
         ):
-            st.session_state.story["slides"].pop(GdelSlideNum-1)
-            st.session_state.story_code.pop(GdelSlideNum-1)
+            st.session_state.story["slides"].pop(deletableSlide-1)
+            st.session_state.story_code.pop(deletableSlide-1)
 
     def play(self) -> None:
         if "story" in st.session_state and st.session_state.story["slides"]:
@@ -84,8 +85,7 @@ class StoryBuilder:
 
     def _add_delete_button(self, rows) -> None:  # type: ignore
         if "story" in st.session_state and st.session_state.story["slides"]:
-            global GdelSlideNum
-            GdelSlideNum = rows.number_input("Select the number of the slide to be deleted.", 
+            deletableSlide = rows.number_input("Select the number of the slide to be deleted.", 
                 min_value=1, max_value=len(st.session_state.story["slides"]),
                 label_visibility="collapsed")
             rows.button(
