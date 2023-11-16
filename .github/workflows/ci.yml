@@ -28,7 +28,7 @@ jobs:
                 run: |
                     python3.10 -m venv ".venv"
                     source .venv/bin/activate
-                    pip install pdm
+                    pip install pdm==2.10.2
                     pdm run install
 
             -   name: Format

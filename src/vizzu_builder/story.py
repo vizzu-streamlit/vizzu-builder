@@ -31,6 +31,7 @@ class StoryBuilder:
             if "story" not in st.session_state or not st.session_state.df.equals(
                 self._df
             ):
+                st.session_state.df = self._df
                 data = Data()
                 data.add_df(self._df)
                 st.session_state.story = Story(data=data)

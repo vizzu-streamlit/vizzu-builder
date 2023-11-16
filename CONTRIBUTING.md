@@ -35,7 +35,7 @@ virtual environment and install `pdm` within it.
 ```sh
 python3.10 -m venv ".venv"
 source .venv/bin/activate
-pip install pdm
+pip install pdm==2.10.2
 ```
 
 Once set up, you can utilize the pre-defined `pdm` scripts. For example, you can
