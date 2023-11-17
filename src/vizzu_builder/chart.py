@@ -11,6 +11,7 @@ import streamlit_vizzu  # type: ignore
 import streamlit as st
 from streamlit_extras.row import row  # type: ignore
 
+from .config.presets import Presets
 from .data.generator import DataCodeGenerator
 from .data.parser import DataFrameParser
 from .story import StoryBuilder
@@ -55,7 +56,6 @@ class ChartBuilder:
                 if "filters" not in st.session_state
                 else st.session_state["filters"]
             )
-            self._presets = self._parse_presets_file()
             self._config = ChartConfig()
             self._config.categories, self._config.values = self._get_columns()
             self._story_builder = StoryBuilder(self._file_name, self._df)
@@ -154,31 +154,36 @@ class ChartBuilder:
         return presets
 
     def _add_charts(self) -> None:
-        if self._presets and self._config.key:
-            if self._config.key in self._presets:
-                data = streamlit_vizzu.Data()
-                data.add_df(self._df)
-                data.set_filter(self._filters)
+        presets = Presets.get(
+            self._config.key,
+            self._config.selected_cat1,
+            self._config.selected_cat2,
+            self._config.selected_value1,
+            self._config.selected_value2,
+        )
+        if presets:
+            data = streamlit_vizzu.Data()
+            data.add_df(self._df)
+            data.set_filter(self._filters)
 
-                for index in range(0, len(self._presets[self._config.key]), 2):
-                    col1, col2 = st.columns(2)
-                    with col1:
-                        self._add_chart(data, index)
-                    with col2:
-                        next_index = index + 1
-                        if next_index < len(self._presets[self._config.key]):
-                            self._add_chart(data, next_index)
+            for index in range(0, len(presets), 2):
+                col1, col2 = st.columns(2)
+                with col1:
+                    self._add_chart(data, presets[index], index)
+                with col2:
+                    next_index = index + 1
+                    if next_index < len(presets):
+                        self._add_chart(data, presets[next_index], next_index)
 
-    def _add_chart(self, data: streamlit_vizzu.Data, index: int) -> None:
-        raw_config = self._presets[self._config.key][index]
-        config = self._process_raw_config(raw_config)
-        self._add_chart_title(raw_config)
+    def _add_chart(self, data: streamlit_vizzu.Data, preset: dict, index: int) -> None:
+        config = preset["config"]
+        self._add_chart_title(preset)
         self._add_chart_animation(index, data, config)
         self._add_chart_code(config)
         self._add_save_button(config)
 
-    def _add_chart_title(self, raw_config: dict) -> None:
-        st.subheader(raw_config["chart"])
+    def _add_chart_title(self, preset: dict) -> None:
+        st.subheader(preset["chart"])
 
     def _add_chart_animation(
         self, index: int, data: streamlit_vizzu.Data, config: dict
@@ -203,8 +208,8 @@ class ChartBuilder:
             if self._config.tooltips:
                 code.append('chart.feature("tooltip", True)')
             code.append("chart.animate(data)\n")
-            filters = f'Data.filter("{self._filters}"), ' if self._filters else ""
-            code.append(f"chart.animate({filters}Config({config}))\n")
+            filters = f'"{self._filters}"' if self._filters else None
+            code.append(f"chart.animate(Data.filter({filters}), Config({config}))\n")
             code.append("chart.show()")
             unformatted_code = "\n".join(code)
             formatted_code = black.format_str(unformatted_code, mode=black.FileMode())
@@ -219,37 +224,6 @@ class ChartBuilder:
         )
         if button:
             self._story_builder.add_slide(self._filters, config)
-
-    def _process_raw_config(self, raw_config: dict) -> dict:
-        config = {}
-        for key, value in raw_config.items():
-            if key not in ["chart", "y_range_min", "y_range_max"] and value is not None:
-                if isinstance(value, list):
-                    value = [self._replace_config(v) for v in value]
-                else:
-                    value = self._replace_config(value)
-                config[key] = value
-        if "y" in config:
-            config["y"] = {"set": config["y"]}
-        if "y_range_min" in raw_config and raw_config["y_range_min"] is not None:
-            config["y"] = config.get("y", {})
-            config["y"]["range"] = config["y"].get("range", {})
-            config["y"]["range"]["min"] = raw_config["y_range_min"]
-        if "y_range_max" in raw_config and raw_config["y_range_max"] is not None:
-            config["y"] = config.get("y", {})
-            config["y"]["range"] = config["y"].get("range", {})
-            config["y"]["range"]["max"] = raw_config["y_range_max"]
-        if self._config.label is not None:
-            config["label"] = self._config.label
-        return config
-
-    def _replace_config(self, value: str | list[str]) -> str | list[str]:
-        if isinstance(value, str):
-            value = value.replace("Cat1", self._config.selected_cat1 or "")
-            value = value.replace("Cat2", self._config.selected_cat2 or "")
-            value = value.replace("Value1", self._config.selected_value1 or "")
-            value = value.replace("Value2", self._config.selected_value2 or "")
-        return value
 
     def _add_story(self) -> None:
         self._story_builder.play()

@@ -54,12 +54,12 @@ class StoryBuilder:
 
     def add_slide(self, filters: str | None, config: dict) -> None:
         if "story" in st.session_state:
-            whole_config = self._process_config(config)
             st.session_state.story.add_slide(
-                Slide(Step(Data.filter(filters), Config(whole_config)))
+                Slide(Step(Data.filter(filters), Config(config)))
             )
+            filters = f'"{filters}"' if filters else None
             st.session_state.story_code.append(
-                f'story.add_slide(Slide(Step(Data.filter("{filters}"), Config({whole_config}))))'
+                f"story.add_slide(Slide(Step(Data.filter({filters}), Config({config}))))"
             )
 
     @staticmethod
@@ -126,33 +126,3 @@ class StoryBuilder:
             formatted_code = black.format_str(unformatted_code, mode=black.FileMode())
             return formatted_code
         return ""
-
-    def _process_config(self, config: dict) -> dict:
-        whole_config = {}
-        whole_config["x"] = None if "x" not in config else config["x"]
-
-        y_set = config.get("y", {}).get("set", None)
-        y_range_min = config.get("y", {}).get("range", {}).get("min", "auto")
-        y_range_max = config.get("y", {}).get("range", {}).get("max", "auto")
-        whole_config["y"] = {
-            "set": y_set,
-            "range": {"min": y_range_min, "max": y_range_max},
-        }
-
-        whole_config["color"] = None if "color" not in config else config["color"]
-        whole_config["lightness"] = (
-            None if "lightness" not in config else config["lightness"]
-        )
-        whole_config["size"] = None if "size" not in config else config["size"]
-        whole_config["noop"] = None if "noop" not in config else config["noop"]
-
-        whole_config["split"] = False if "split" not in config else config["split"]
-        whole_config["align"] = "none" if "align" not in config else config["align"]
-
-        whole_config["coordSystem"] = config["coordSystem"]
-        whole_config["geometry"] = config["geometry"]
-        whole_config["orientation"] = (
-            "horizontal" if "orientation" not in config else config["orientation"]
-        )
-
-        return whole_config
