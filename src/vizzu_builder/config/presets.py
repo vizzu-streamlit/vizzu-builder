@@ -33,7 +33,6 @@ class Presets:
         value2: str | None,
     ) -> list:
         style = {
-            "backgroundColor": "#000",
             "plot": {
                 "yAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
                 "xAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
