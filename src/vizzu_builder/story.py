@@ -8,8 +8,9 @@ import streamlit as st
 from streamlit_extras.row import row  # type: ignore
 from ipyvizzustory.env.st.story import Story
 from ipyvizzustory import Slide, Step
-from ipyvizzu import Config, Data
+from ipyvizzu import Config, Data, Style
 
+from .config.presets import ChartPreset
 from .data.generator import DataCodeGenerator
 
 
@@ -52,14 +53,19 @@ class StoryBuilder:
             st.session_state.story.set_feature("tooltip", tooltip)
             self._tooltip = tooltip
 
-    def add_slide(self, filters: str | None, config: dict) -> None:
+    def add_slide(self, filters: str | None, preset: ChartPreset) -> None:
         if "story" in st.session_state:
             st.session_state.story.add_slide(
-                Slide(Step(Data.filter(filters), Config(config)))
+                Slide(
+                    Step(
+                        Data.filter(filters), Config(preset.config), Style(preset.style)
+                    )
+                )
             )
             filters = f'"{filters}"' if filters else None
+            animation = f"Data.filter({filters}), Config({preset.config}), Style({preset.style})"
             st.session_state.story_code.append(
-                f"story.add_slide(Slide(Step(Data.filter({filters}), Config({config}))))"
+                f"story.add_slide(Slide(Step({animation})))"
             )
 
     @staticmethod
@@ -114,7 +120,7 @@ class StoryBuilder:
         if "story" in st.session_state and st.session_state.story_code:
             code = []
             code.append("import pandas as pd")
-            code.append("from ipyvizzu import Config, Data")
+            code.append("from ipyvizzu import Config, Data, Style")
             code.append("from ipyvizzustory import Story, Slide, Step")
             code += DataCodeGenerator.get_data_code(self._file_name, self._df)
             code.append("story = Story(data)")
