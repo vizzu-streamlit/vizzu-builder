@@ -19,6 +19,7 @@ if "story_code" not in st.session_state:
 
 
 class StoryBuilder:
+    deletableSlide = None
     def __init__(self, file_name: str | None, df: pd.DataFrame | None) -> None:
         self._file_name = file_name
         self._df = df
@@ -69,30 +70,34 @@ class StoryBuilder:
             )
 
     @staticmethod
-    def delete_last_slide() -> None:
+    def delete_slide() -> None:
         if (
             "story" in st.session_state
             and st.session_state.story["slides"]
             and st.session_state.story_code
         ):
-            st.session_state.story["slides"].pop()
-            st.session_state.story_code.pop()
+            st.session_state.story["slides"].pop(deletableSlide-1)
+            st.session_state.story_code.pop(deletableSlide-1)
 
     def play(self) -> None:
         if "story" in st.session_state and st.session_state.story["slides"]:
             st.subheader("Create Story")
             st.session_state.story.play()
-            rows = row(2)
-            self._add_delete_button(rows)
-            self._add_download_button(rows)
+            delrows = row(2)
+            downrows = row(1)
+            self._add_delete_button(delrows)
+            self._add_download_button(downrows)
             self._add_show_code_button()
 
     def _add_delete_button(self, rows) -> None:  # type: ignore
         if "story" in st.session_state and st.session_state.story["slides"]:
+            deletableSlide = rows.number_input("Select the number of the slide to be deleted.", 
+                min_value=1, max_value=len(st.session_state.story["slides"]),
+                label_visibility="collapsed")
             rows.button(
-                "Delete last Slide",
+                "🗑️ Delete slide",
                 use_container_width=True,
-                on_click=StoryBuilder.delete_last_slide,
+                on_click=StoryBuilder.delete_slide
             )
 
     def _add_download_button(self, rows) -> None:  # type: ignore
