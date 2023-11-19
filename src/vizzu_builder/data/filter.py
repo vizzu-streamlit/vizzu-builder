@@ -8,7 +8,6 @@ from pandas.api.types import (
     CategoricalDtype,
     is_datetime64_any_dtype,
     is_numeric_dtype,
-    is_object_dtype,
 )
 from streamlit_extras.row import row  # type: ignore
 
@@ -21,7 +20,6 @@ class DataFrameFilter:
         self._filters: list[str] = []
         modify = st.toggle("Add filters")
         if modify:
-            self._convert_datetimes()
             self._set_filters()
 
     def _set_filters(self) -> None:
@@ -95,15 +93,3 @@ class DataFrameFilter:
             st.session_state["filters"] = (
                 " && ".join(filters_wrapped) if filters_wrapped else None
             )
-
-    def _convert_datetimes(self) -> None:
-        # Try to convert datetimes into a standard format (datetime, no timezone)
-        for col in self._df.columns:
-            if is_object_dtype(self._df[col]):
-                try:
-                    self._df[col] = pd.to_datetime(self._df[col])
-                except Exception:  # pylint: disable=broad-exception-caught
-                    pass
-
-            if is_datetime64_any_dtype(self._df[col]):
-                self._df[col] = self._df[col].dt.tz_localize(None)

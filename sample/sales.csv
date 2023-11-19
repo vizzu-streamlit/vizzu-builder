@@ -1,0 +1,85 @@
+Year,Quarter,Continent,Country,Category,Sub-Category,Items sold,Unit price,Revenue,Profit
+2021,Q1,Asia,China,Furniture,Bookcases,41,64,2624,524.8
+2021,Q1,Asia,Japan,Furniture,Chairs,141,82,11562,1849.92
+2021,Q1,Europe,France,Office Supplies,Labels,138,81,11178,1900.26
+2021,Q1,Europe,Germany,Furniture,Tables,99,160,15840,1900.8
+2021,Q1,North America,Canada,Office Supplies,Binders,29,52,1508,226.2
+2021,Q1,North America,Mexico,Furniture,Furnishings,130,188,24440,4399.2
+2021,Q1,North America,United States,Office Supplies,Art,141,137,19317,3670.23
+2021,Q2,Asia,China,Technology,Phones,91,174,15834,3008.46
+2021,Q2,Asia,Japan,Furniture,Chairs,86,128,11008,1651.2
+2021,Q2,Europe,France,Furniture,Tables,112,57,6384,766.08
+2021,Q2,Europe,Germany,Office Supplies,Binders,101,127,12827,2180.59
+2021,Q2,North America,Canada,Technology,Accessories,27,162,4374,612.36
+2021,Q2,North America,Mexico,Furniture,Bookcases,48,100,4800,768
+2021,Q2,North America,United States,Office Supplies,Binders,63,124,7812,1249.92
+2021,Q3,Asia,China,Furniture,Furnishings,116,54,6264,1064.88
+2021,Q3,Asia,Japan,Technology,Phones,143,194,27742,2774.2
+2021,Q3,Europe,France,Furniture,Bookcases,54,95,5130,872.1
+2021,Q3,Europe,Germany,Furniture,Chairs,36,200,7200,792
+2021,Q3,North America,Canada,Technology,Phones,100,94,9400,1880
+2021,Q3,North America,Mexico,Technology,Phones,106,66,6996,979.44
+2021,Q3,North America,United States,Office Supplies,Art,119,133,15827,1899.24
+2021,Q4,Asia,China,Office Supplies,Art,125,96,12000,1800
+2021,Q4,Asia,Japan,Technology,Accessories,62,144,8928,892.8
+2021,Q4,Europe,France,Office Supplies,Binders,116,200,23200,3248
+2021,Q4,Europe,Germany,Furniture,Bookcases,122,132,16104,1771.44
+2021,Q4,North America,Canada,Furniture,Chairs,139,123,17097,1709.7
+2021,Q4,North America,Mexico,Office Supplies,Labels,123,168,20664,3306.24
+2021,Q4,North America,United States,Furniture,Tables,33,91,3003,540.54
+2022,Q1,Asia,China,Office Supplies,Binders,56,63,3528,352.8
+2022,Q1,Asia,Japan,Furniture,Furnishings,60,134,8040,1608
+2022,Q1,Europe,France,Office Supplies,Art,170,134,22780,2505.8
+2022,Q1,Europe,Germany,Technology,Phones,99,182,18018,3063.06
+2022,Q1,North America,Canada,Furniture,Chairs,190,170,32300,5168
+2022,Q1,North America,Mexico,Furniture,Tables,196,244,47824,8130.08
+2022,Q1,North America,United States,Office Supplies,Binders,144,113,16272,2278.08
+2022,Q2,Asia,China,Technology,Accessories,152,164,24928,4736.32
+2022,Q2,Asia,Japan,Furniture,Bookcases,186,90,16740,3180.6
+2022,Q2,Europe,France,Office Supplies,Binders,154,83,12782,1917.3
+2022,Q2,Europe,Germany,Furniture,Furnishings,163,201,32763,3276.3
+2022,Q2,North America,Canada,Technology,Phones,50,84,4200,798
+2022,Q2,North America,Mexico,Furniture,Bookcases,81,137,11097,2219.4
+2022,Q2,North America,United States,Furniture,Chairs,142,129,18318,3114.06
+2022,Q3,Asia,China,Technology,Phones,60,212,12720,1908
+2022,Q3,Asia,Japan,Technology,Phones,68,79,5372,1020.68
+2022,Q3,Europe,France,Office Supplies,Art,165,92,15180,2428.8
+2022,Q3,Europe,Germany,Office Supplies,Art,178,144,25632,3332.16
+2022,Q3,North America,Canada,Technology,Accessories,147,87,12789,1278.9
+2022,Q3,North America,Mexico,Office Supplies,Binders,122,240,29280,5270.4
+2022,Q3,North America,United States,Furniture,Bookcases,46,80,3680,699.2
+2022,Q4,Asia,China,Furniture,Chairs,179,136,24344,3164.72
+2022,Q4,Asia,Japan,Office Supplies,Labels,178,228,40584,4870.08
+2022,Q4,Europe,France,Furniture,Tables,40,148,5920,1065.6
+2022,Q4,Europe,Germany,Office Supplies,Binders,70,77,5390,700.7
+2022,Q4,North America,Canada,Furniture,Furnishings,56,122,6832,1161.44
+2022,Q4,North America,Mexico,Office Supplies,Art,170,71,12070,1810.5
+2022,Q4,North America,United States,Technology,Phones,184,119,21896,2627.52
+2023,Q1,Asia,China,Furniture,Chairs,72,85,6120,1224
+2023,Q1,Asia,Japan,Furniture,Tables,199,83,16517,2973.06
+2023,Q1,Europe,France,Office Supplies,Binders,223,222,49506,6930.84
+2023,Q1,Europe,Germany,Technology,Accessories,145,194,28130,3375.6
+2023,Q1,North America,Canada,Furniture,Bookcases,121,272,32912,4278.56
+2023,Q1,North America,Mexico,Office Supplies,Binders,122,209,25498,3314.74
+2023,Q1,North America,United States,Furniture,Furnishings,138,292,40296,4432.56
+2023,Q2,Asia,China,Technology,Phones,70,164,11480,2296
+2023,Q2,Asia,Japan,Furniture,Bookcases,280,264,73920,14784
+2023,Q2,Europe,France,Furniture,Chairs,248,216,53568,10713.6
+2023,Q2,Europe,Germany,Technology,Phones,243,184,44712,6706.8
+2023,Q2,North America,Canada,Technology,Phones,270,206,55620,11124
+2023,Q2,North America,Mexico,Office Supplies,Art,230,90,20700,2277
+2023,Q2,North America,United States,Office Supplies,Art,166,139,23074,3461.1
+2023,Q3,Asia,China,Technology,Accessories,78,167,13026,1302.6
+2023,Q3,Asia,Japan,Office Supplies,Binders,180,92,16560,1656
+2023,Q3,Europe,France,Furniture,Bookcases,112,261,29232,3215.52
+2023,Q3,Europe,Germany,Furniture,Chairs,68,295,20060,3610.8
+2023,Q3,North America,Canada,Office Supplies,Labels,280,87,24360,2679.6
+2023,Q3,North America,Mexico,Furniture,Tables,283,97,27451,3019.61
+2023,Q3,North America,United States,Office Supplies,Binders,81,297,24057,4330.26
+2023,Q4,Asia,China,Furniture,Furnishings,136,97,13192,1978.8
+2023,Q4,Asia,Japan,Office Supplies,Art,232,164,38048,6468.16
+2023,Q4,Europe,France,Technology,Phones,271,266,72086,9371.18
+2023,Q4,Europe,Germany,Furniture,Chairs,294,288,84672,12700.8
+2023,Q4,North America,Canada,Furniture,Tables,152,267,40584,6087.6
+2023,Q4,North America,Mexico,Office Supplies,Binders,232,181,41992,6298.8
+2023,Q4,North America,United States,Technology,Accessories,78,296,23088,3001.44
