@@ -167,11 +167,16 @@ class ChartBuilder:
                         self._add_chart(data, presets[next_index], next_index)
 
     def _add_chart(self, data: streamlit_vizzu.Data, preset: dict, index: int) -> None:
-        config = preset["config"]
+        config = self._get_config(preset)
         self._add_chart_title(preset)
         self._add_chart_animation(index, data, config)
         self._add_chart_code(config)
         self._add_save_button(config)
+
+    def _get_config(self, preset: dict) -> dict:
+        config: dict = preset["config"]
+        config["label"] = self._config.label
+        return config
 
     def _add_chart_title(self, preset: dict) -> None:
         st.subheader(preset["chart"])
