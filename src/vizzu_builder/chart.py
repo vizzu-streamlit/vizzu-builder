@@ -3,8 +3,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-import json
-from pathlib import Path
 import black
 import pandas as pd
 import streamlit_vizzu  # type: ignore
@@ -146,13 +144,6 @@ class ChartBuilder:
         if self._config.key not in self._config.keys:
             st.warning("Please select at least one category and one value!")
 
-    def _parse_presets_file(self) -> dict:
-        presets_file = Path(__file__).parent / "config/presets.json"
-        presets = {}
-        with open(presets_file, "r", encoding="utf8") as json_file:
-            presets = json.load(json_file)
-        return presets
-
     def _add_charts(self) -> None:
         presets = Presets.get(
             self._config.key,
@@ -176,11 +167,16 @@ class ChartBuilder:
                         self._add_chart(data, presets[next_index], next_index)
 
     def _add_chart(self, data: streamlit_vizzu.Data, preset: dict, index: int) -> None:
-        config = preset["config"]
+        config = self._get_config(preset)
         self._add_chart_title(preset)
         self._add_chart_animation(index, data, config)
         self._add_chart_code(config)
         self._add_save_button(config)
+
+    def _get_config(self, preset: dict) -> dict:
+        config: dict = preset["config"]
+        config["label"] = self._config.label
+        return config
 
     def _add_chart_title(self, preset: dict) -> None:
         st.subheader(preset["chart"])
