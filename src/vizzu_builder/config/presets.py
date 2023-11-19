@@ -2,6 +2,24 @@
 
 from __future__ import annotations
 
+import streamlit_vizzu  # type: ignore
+
+
+class ChartPreset:
+    # pylint: disable=too-few-public-methods
+
+    def __init__(
+        self, data: streamlit_vizzu.Data, presets: list, index: int, label: str | None
+    ) -> None:
+        self.index: int = index
+        self.data: dict = data
+        preset = presets[index]
+        config = preset["config"]
+        config["label"] = label
+        self.config: dict = config
+        self.style: dict = preset["style"]
+        self.chart: str = preset["chart"]
+
 
 class Presets:
     # pylint: disable=too-few-public-methods
@@ -14,6 +32,21 @@ class Presets:
         value1: str | None,
         value2: str | None,
     ) -> list:
+        style = {
+            "backgroundColor": "#000",
+            "plot": {
+                "yAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                "xAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                "marker": {
+                    "label": {
+                        "numberFormat": "prefixed",
+                        "maxFractionDigits": "1",
+                        "numberScale": "shortScaleSymbolUS",
+                    },
+                    "rectangleSpacing": None,
+                },
+            },
+        }
         presets = {
             "Cat1, Value1": [
                 {
@@ -30,6 +63,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Column Chart",
                 },
                 {
@@ -46,6 +80,7 @@ class Presets:
                         "align": "none",
                         "orientation": "vertical",
                     },
+                    "style": style,
                     "chart": "Bar Chart",
                 },
                 {
@@ -62,6 +97,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Area Chart",
                 },
                 {
@@ -78,6 +114,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Line Chart",
                 },
                 {
@@ -94,6 +131,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Lollipop",
                 },
                 {
@@ -110,6 +148,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Polar Column Chart",
                 },
                 {
@@ -126,6 +165,7 @@ class Presets:
                         "align": "none",
                         "orientation": "vertical",
                     },
+                    "style": style,
                     "chart": "Radial Bar Chart",
                 },
                 {
@@ -142,6 +182,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Polar Area Chart",
                 },
                 {
@@ -158,6 +199,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Polar Line Chart",
                 },
                 {
@@ -174,6 +216,7 @@ class Presets:
                         "align": "none",
                         "orientation": "vertical",
                     },
+                    "style": style,
                     "chart": "Pie Chart",
                 },
                 {
@@ -190,6 +233,7 @@ class Presets:
                         "align": "none",
                         "orientation": "vertical",
                     },
+                    "style": style,
                     "chart": "Donut Chart",
                 },
                 {
@@ -206,6 +250,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Treemap",
                 },
                 {
@@ -222,6 +267,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Bubble Chart",
                 },
                 {
@@ -241,6 +287,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Waterfall",
                 },
                 {
@@ -260,6 +307,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Waterfall V2",
                 },
                 {
@@ -276,6 +324,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Correlogram",
                 },
             ],
@@ -294,6 +343,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Scatter Plot",
                 },
                 {
@@ -310,6 +360,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Bubble Plot",
                 },
                 {
@@ -326,6 +377,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Bubble Plot V2",
                 },
                 {
@@ -342,6 +394,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Polar Scatter",
                 },
                 {
@@ -358,6 +411,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Variable Radius Pie Chart",
                 },
                 {
@@ -374,6 +428,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Mekko",
                 },
             ],
@@ -392,6 +447,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Grouped Column Chart",
                 },
                 {
@@ -408,6 +464,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Grouped Column Chart V2",
                 },
                 {
@@ -427,6 +484,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Stacked Column Chart",
                 },
                 {
@@ -446,6 +504,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Splitted Column Chart",
                 },
                 {
@@ -465,6 +524,7 @@ class Presets:
                         "align": "stretch",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "100% Stacked Column Chart",
                 },
                 {
@@ -481,6 +541,7 @@ class Presets:
                         "align": "none",
                         "orientation": "vertical",
                     },
+                    "style": style,
                     "chart": "Grouped Bar Chart",
                 },
                 {
@@ -497,6 +558,7 @@ class Presets:
                         "align": "none",
                         "orientation": "vertical",
                     },
+                    "style": style,
                     "chart": "Grouped Bar Chart V2",
                 },
                 {
@@ -513,6 +575,7 @@ class Presets:
                         "align": "none",
                         "orientation": "vertical",
                     },
+                    "style": style,
                     "chart": "Stacked Bar Chart",
                 },
                 {
@@ -529,6 +592,7 @@ class Presets:
                         "align": "none",
                         "orientation": "vertical",
                     },
+                    "style": style,
                     "chart": "Splitted Bar Chart",
                 },
                 {
@@ -545,6 +609,7 @@ class Presets:
                         "align": "stretch",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "100% Stacked Bar Chart",
                 },
                 {
@@ -561,6 +626,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Line Chart",
                 },
                 {
@@ -580,6 +646,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Stacked Area Chart",
                 },
                 {
@@ -599,6 +666,7 @@ class Presets:
                         "align": "stretch",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "100% Stacked Area Chart",
                 },
                 {
@@ -618,6 +686,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Ridgeline Plot",
                 },
                 {
@@ -637,6 +706,7 @@ class Presets:
                         "align": "center",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Stream Graph",
                 },
                 {
@@ -656,6 +726,7 @@ class Presets:
                         "align": "center",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Violin Graph",
                 },
                 {
@@ -672,6 +743,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Stacked Bubble Chart",
                 },
                 {
@@ -691,6 +763,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Polar Stacked Column Chart",
                 },
                 {
@@ -710,6 +783,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Polar Stacked Area Chart",
                 },
                 {
@@ -726,6 +800,7 @@ class Presets:
                         "align": "none",
                         "orientation": "vertical",
                     },
+                    "style": style,
                     "chart": "Radial Stacked Bar Chart",
                 },
                 {
@@ -742,6 +817,7 @@ class Presets:
                         "align": "stretch",
                         "orientation": "vertical",
                     },
+                    "style": style,
                     "chart": "Nested Donut Chart",
                 },
                 {
@@ -757,6 +833,20 @@ class Presets:
                         "split": False,
                         "align": "none",
                         "orientation": "horizontal",
+                    },
+                    "style": {
+                        "plot": {
+                            "yAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "xAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "marker": {
+                                "label": {
+                                    "numberFormat": "prefixed",
+                                    "maxFractionDigits": "1",
+                                    "numberScale": "shortScaleSymbolUS",
+                                },
+                                "rectangleSpacing": 0,
+                            },
+                        },
                     },
                     "chart": "Heat Map",
                 },
@@ -774,6 +864,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Heat Map Gradient",
                 },
             ],
@@ -792,6 +883,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Scatter Plot",
                 },
                 {
@@ -808,6 +900,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Bubble Plot",
                 },
                 {
@@ -824,6 +917,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Bubble Plot V2",
                 },
                 {
@@ -840,6 +934,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Stacked Treemap",
                 },
                 {
@@ -859,6 +954,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Stacked Mekko Chart",
                 },
                 {
@@ -878,6 +974,7 @@ class Presets:
                         "align": "stretch",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Marimekko Chart",
                 },
                 {
@@ -894,6 +991,7 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
+                    "style": style,
                     "chart": "Polar Scatter",
                 },
             ],

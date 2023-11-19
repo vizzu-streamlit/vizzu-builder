@@ -9,7 +9,7 @@ import streamlit_vizzu  # type: ignore
 import streamlit as st
 from streamlit_extras.row import row  # type: ignore
 
-from .config.presets import Presets
+from .config.presets import ChartPreset, Presets
 from .data.generator import DataCodeGenerator
 from .data.parser import DataFrameParser
 from .story import StoryBuilder
@@ -159,45 +159,46 @@ class ChartBuilder:
 
             for index in range(0, len(presets), 2):
                 col1, col2 = st.columns(2)
+
                 with col1:
-                    self._add_chart(data, presets[index], index)
+                    preset = ChartPreset(data, presets, index, self._config.label)
+                    self._add_chart(preset)
                 with col2:
                     next_index = index + 1
                     if next_index < len(presets):
-                        self._add_chart(data, presets[next_index], next_index)
+                        next_preset = ChartPreset(
+                            data, presets, next_index, self._config.label
+                        )
+                        self._add_chart(next_preset)
 
-    def _add_chart(self, data: streamlit_vizzu.Data, preset: dict, index: int) -> None:
-        config = self._get_config(preset)
+    def _add_chart(self, preset: ChartPreset) -> None:
         self._add_chart_title(preset)
-        self._add_chart_animation(index, data, config)
-        self._add_chart_code(config)
-        self._add_save_button(config)
+        self._add_chart_animation(preset)
+        self._add_chart_code(preset)
+        self._add_save_button(preset)
 
-    def _get_config(self, preset: dict) -> dict:
-        config: dict = preset["config"]
-        config["label"] = self._config.label
-        return config
+    def _add_chart_title(self, preset: ChartPreset) -> None:
+        st.subheader(preset.chart)
 
-    def _add_chart_title(self, preset: dict) -> None:
-        st.subheader(preset["chart"])
-
-    def _add_chart_animation(
-        self, index: int, data: streamlit_vizzu.Data, config: dict
-    ) -> None:
+    def _add_chart_animation(self, preset: ChartPreset) -> None:
         chart = streamlit_vizzu.VizzuChart(
             height=300,
-            key=f"vizzu_{self._config.key}_{index}",
+            key=f"chart_{self._config.key}_{preset.index}",
             use_container_width=True,
         )
-        chart.animate(data, streamlit_vizzu.Config(config))
+        chart.animate(
+            preset.data,
+            streamlit_vizzu.Config(preset.config),
+            streamlit_vizzu.Style(preset.style),
+        )
         chart.feature("tooltip", self._config.tooltips)
         chart.show()
 
-    def _add_chart_code(self, config: dict) -> None:
+    def _add_chart_code(self, preset: ChartPreset) -> None:
         show_code = st.expander("Show code")
         with show_code:
             code = []
-            code.append("from streamlit_vizzu import VizzuChart, Data, Config")
+            code.append("from streamlit_vizzu import VizzuChart, Data, Config, Style")
             code.append("import pandas as pd")
             code += DataCodeGenerator.get_data_code(self._file_name, self._df)
             code.append("chart = VizzuChart()")
@@ -205,7 +206,8 @@ class ChartBuilder:
                 code.append('chart.feature("tooltip", True)')
             code.append("chart.animate(data)\n")
             filters = f'"{self._filters}"' if self._filters else None
-            code.append(f"chart.animate(Data.filter({filters}), Config({config}))\n")
+            animation = f"Data.filter({filters}), Config({preset.config}), Style({preset.style})"
+            code.append(f"chart.animate({animation})\n")
             code.append("chart.show()")
             unformatted_code = "\n".join(code)
             formatted_code = black.format_str(unformatted_code, mode=black.FileMode())
@@ -214,12 +216,14 @@ class ChartBuilder:
                 language="python",
             )
 
-    def _add_save_button(self, config: dict) -> None:
+    def _add_save_button(self, preset: ChartPreset) -> None:
         button = st.button(
-            "Add Chart to Story", key=str(config), use_container_width=True
+            "Add Chart to Story",
+            key=f"save_{self._config.key}_{preset.index}",
+            use_container_width=True,
         )
         if button:
-            self._story_builder.add_slide(self._filters, config)
+            self._story_builder.add_slide(self._filters, preset)
 
     def _add_story(self) -> None:
         self._story_builder.play()
