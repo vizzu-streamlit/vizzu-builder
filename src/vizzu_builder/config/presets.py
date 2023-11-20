@@ -43,6 +43,8 @@ class Presets:
                         "numberScale": "shortScaleSymbolUS",
                     },
                     "rectangleSpacing": None,
+					"borderOpacity": 1,
+					"circleMinRadius":0.005,
                 },
             },
         }
@@ -130,7 +132,22 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
-                    "style": style,
+                    "style": {
+                        "plot": {
+                            "yAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "xAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "marker": {
+                                "label": {
+                                    "numberFormat": "prefixed",
+                                    "maxFractionDigits": "1",
+                                    "numberScale": "shortScaleSymbolUS",
+                                },
+                                "rectangleSpacing": 0,
+								"circleMinRadius":0.02,
+								"borderOpacity": 1,
+                            },
+                        },
+                    },
                     "chart": "Lollipop",
                 },
                 {
@@ -342,7 +359,22 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
-                    "style": style,
+                    "style": {
+                        "plot": {
+                            "yAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "xAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "marker": {
+                                "label": {
+                                    "numberFormat": "prefixed",
+                                    "maxFractionDigits": "1",
+                                    "numberScale": "shortScaleSymbolUS",
+                                },
+                                "rectangleSpacing": 0,
+								"circleMinRadius":0.015,
+								"borderOpacity": 1,
+                            },
+                        },
+                    },
                     "chart": "Scatter Plot",
                 },
                 {
@@ -393,7 +425,22 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
-                    "style": style,
+                    "style": {
+                        "plot": {
+                            "yAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "xAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "marker": {
+                                "label": {
+                                    "numberFormat": "prefixed",
+                                    "maxFractionDigits": "1",
+                                    "numberScale": "shortScaleSymbolUS",
+                                },
+                                "rectangleSpacing": 0,
+								"circleMinRadius":0.015,
+								"borderOpacity": 1,
+                            },
+                        },
+                    },
                     "chart": "Polar Scatter",
                 },
                 {
@@ -816,7 +863,22 @@ class Presets:
                         "align": "stretch",
                         "orientation": "vertical",
                     },
-                    "style": style,
+                    "style": {
+                        "plot": {
+                            "yAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "xAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "marker": {
+                                "label": {
+                                    "numberFormat": "prefixed",
+                                    "maxFractionDigits": "1",
+                                    "numberScale": "shortScaleSymbolUS",
+                                },
+                                "rectangleSpacing": 0,
+								"borderOpacity": 0,
+								"circleMinRadius":0.015,
+                            },
+                        },
+                    },
                     "chart": "Nested Donut Chart",
                 },
                 {
@@ -844,6 +906,8 @@ class Presets:
                                     "numberScale": "shortScaleSymbolUS",
                                 },
                                 "rectangleSpacing": 0,
+								"borderOpacity": 1,
+								"circleMinRadius":0.005,
                             },
                         },
                     },
@@ -863,7 +927,22 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
-                    "style": style,
+                    "style": {
+                        "plot": {
+                            "yAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "xAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "marker": {
+                                "label": {
+                                    "numberFormat": "prefixed",
+                                    "maxFractionDigits": "1",
+                                    "numberScale": "shortScaleSymbolUS",
+                                },
+                                "rectangleSpacing": 0,
+								"borderOpacity": 1,
+								"circleMinRadius":0.005,
+                            },
+                        },
+                    },
                     "chart": "Heat Map Gradient",
                 },
             ],
@@ -882,7 +961,22 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
-                    "style": style,
+                    "style": {
+                        "plot": {
+                            "yAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "xAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "marker": {
+                                "label": {
+                                    "numberFormat": "prefixed",
+                                    "maxFractionDigits": "1",
+                                    "numberScale": "shortScaleSymbolUS",
+                                },
+                                "rectangleSpacing": 0,
+								"circleMinRadius":0.015,
+								"borderOpacity": 1,
+                            },
+                        },
+                    },
                     "chart": "Scatter Plot",
                 },
                 {
