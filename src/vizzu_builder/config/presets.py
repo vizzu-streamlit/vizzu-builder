@@ -437,7 +437,7 @@ class Presets:
                                     "numberScale": "shortScaleSymbolUS",
                                 },
                                 "rectangleSpacing": 0,
-                                "circleMinRadius": 0.015,
+                                "circleMinRadius": 0.025,
                                 "borderOpacity": 1,
                             },
                         },
@@ -1085,7 +1085,22 @@ class Presets:
                         "align": "none",
                         "orientation": "horizontal",
                     },
-                    "style": style,
+                    "style": {
+                        "plot": {
+                            "yAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "xAxis": {"label": {"numberScale": "shortScaleSymbolUS"}},
+                            "marker": {
+                                "label": {
+                                    "numberFormat": "prefixed",
+                                    "maxFractionDigits": "1",
+                                    "numberScale": "shortScaleSymbolUS",
+                                },
+                                "rectangleSpacing": 0,
+                                "circleMinRadius": 0.025,
+                                "borderOpacity": 1,
+                            },
+                        },
+                    },
                     "chart": "Polar Scatter",
                 },
             ],
