@@ -2,34 +2,44 @@
 
 from __future__ import annotations
 
-import pandas as pd
 import streamlit as st
 
-from .data.loader import CsvFileUploader
-from .data.filter import DataFrameFilter
-from .chart import ChartBuilder
+from .chart.configurator import SelectedChartConfig, ChartConfigurator
+from .chart.generator import ChartGenerator
+from .chart.updater import ChartUpdater
+from .data.configurator import DataConfig, DataConfigurator
+from .story.generator import StoryGenerator
 
 
 class App:
     # pylint: disable=too-few-public-methods
 
     def __init__(self) -> None:
-        self._file_name: str | None = None
-        self._df: pd.DataFrame | None = None
+        self._builder_data = DataConfig()
+        self._builder_config = SelectedChartConfig()
+
         self._init_page()
-        self._init_csv_file_loader()
-        self._init_builders()
+        self._add_data_configurator()
+        self._add_chart_configurator()
+        self._add_chart_updater()
+        self._add_generators()
 
     def _init_page(self) -> None:
-        st.set_page_config(page_title="Vizzu Builder", page_icon="🏗️")
+        st.set_page_config(page_title="Vizzu Builder", page_icon="🏗️", layout="wide")
         st.title("🏗️ Vizzu Builder")
 
-    def _init_csv_file_loader(self) -> None:
-        csv_file_uploader = CsvFileUploader()
-        self._file_name = csv_file_uploader.file_name
-        self._df = csv_file_uploader.df
-        if self._df is not None:
-            DataFrameFilter(self._df)
+    def _add_data_configurator(self) -> None:
+        data_configurator = DataConfigurator()
+        self._builder_data = data_configurator.data
 
-    def _init_builders(self) -> None:
-        ChartBuilder(self._file_name, self._df)
+    def _add_chart_configurator(self) -> None:
+        chart_configurator = ChartConfigurator(self._builder_data)
+        self._builder_config = chart_configurator.config
+
+    def _add_chart_updater(self) -> None:
+        ChartUpdater(self._builder_data, self._builder_config)
+
+    def _add_generators(self) -> None:
+        story_generator = StoryGenerator()
+        ChartGenerator(story_generator)
+        story_generator.play()
