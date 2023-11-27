@@ -49,6 +49,7 @@ class ChartConfig:
 class SelectedChartConfig:
     dimensions: list[str] = field(default_factory=list)
     measures: list[str] = field(default_factory=list)
+    sort: bool = False
     aggregators: list[str] = field(default_factory=list)
     label: str = UNSET
     tooltip: bool = True
@@ -75,8 +76,8 @@ class ChartConfigurator:
 
     def _add_buttons(self) -> None:
         add_methods = [
-            [self._add_dimension_buttons],
-            [self._add_measure_buttons],
+            [self._add_dimension_button],
+            [self._add_measure_button, self._add_sort_button],
             [self._add_aggregator_buttons],
             [self._add_label_button, self._add_tooltip_button],
         ]
@@ -87,7 +88,7 @@ class ChartConfigurator:
                 for method in add_methods[index]:
                     method()
 
-    def _add_dimension_buttons(self) -> None:
+    def _add_dimension_button(self) -> None:
         self._selected_config.dimensions = st.multiselect(
             "Categories",
             self._config.dimensions,
@@ -95,12 +96,21 @@ class ChartConfigurator:
             placeholder="Select up to 2",
         )
 
-    def _add_measure_buttons(self) -> None:
+    def _add_measure_button(self) -> None:
         self._selected_config.measures = st.multiselect(
             "Values",
             self._config.measures + ["Count"],
             max_selections=2,
             placeholder="Select up to 2",
+        )
+
+    def _add_sort_button(self) -> None:
+        disabled = len(self._selected_config.measures) != 1
+        self._selected_config.sort = st.toggle(
+            "Sort by Value",
+            key=f"Sort by Value {disabled}",
+            value=False,
+            disabled=disabled,
         )
 
     def _add_aggregator_buttons(self) -> None:
