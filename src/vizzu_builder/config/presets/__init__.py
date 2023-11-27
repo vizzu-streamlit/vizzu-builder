@@ -64,16 +64,25 @@ class Presets:
                 config.measures[1], config.aggregators[1]
             )
             presets = D2M2.get(dimension1, dimension2, measure1, measure2)
-        presets = Presets._set_label(presets, config.label)
+        label = Presets._get_label(config)
+        presets = Presets._set_labels(presets, label)
         return presets
 
     @staticmethod
-    def _set_label(presets: list, label: str) -> list:
+    def _get_label(config: SelectedChartConfig) -> str | None:
+        new_label: str | None = config.label
+        if new_label == UNSET:
+            new_label = None
+        elif new_label == config.measures[0]:
+            new_label = Presets._set_aggregator(new_label, config.aggregators[0])
+        elif new_label == config.measures[1]:
+            new_label = Presets._set_aggregator(new_label, config.aggregators[1])
+        return new_label
+
+    @staticmethod
+    def _set_labels(presets: list, label: str | None) -> list:
         for index, _ in enumerate(presets):
-            new_label: str | None = label
-            if label == UNSET:
-                new_label = None
-            presets[index]["config"]["label"] = new_label
+            presets[index]["config"]["label"] = label
         return presets
 
     @staticmethod
