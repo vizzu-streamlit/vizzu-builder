@@ -23,9 +23,10 @@ class ChartGenerator:
             self._add_charts()
 
     def _add_charts(self) -> None:
-        presets = Presets.get(self._config)
+        presets = Presets(self._config)
+        charts = presets.charts
         self._add_title()
-        if not presets:
+        if not charts:
             st.warning(
                 f"Please select at least one {DataParser.DIMENSION} and one {DataParser.MEASURE}",
                 icon="⚠️",
@@ -34,24 +35,24 @@ class ChartGenerator:
             data = streamlit_vizzu.Data()
             data.add_df(self._data.df)
             data.set_filter(self._data.filters)
-            for index in range(0, len(presets), 3):
+            for index in range(0, len(charts), 3):
                 col0, col1, col2 = st.columns(3)
 
                 index0 = index
                 with col0:
-                    preset0 = Preset(data, presets, index0)
+                    preset0 = Preset(data, charts, index0)
                     self._add_chart(preset0)
 
                 index1 = index + 1
-                if index1 < len(presets):
+                if index1 < len(charts):
                     with col1:
-                        preset1 = Preset(data, presets, index1)
+                        preset1 = Preset(data, charts, index1)
                         self._add_chart(preset1)
 
                 index2 = index + 2
-                if index2 < len(presets):
+                if index2 < len(charts):
                     with col2:
-                        preset2 = Preset(data, presets, index2)
+                        preset2 = Preset(data, charts, index2)
                         self._add_chart(preset2)
         st.divider()
 

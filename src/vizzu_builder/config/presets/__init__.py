@@ -27,63 +27,79 @@ class Preset:
 class Presets:
     # pylint: disable=too-few-public-methods
 
-    @staticmethod
-    def get(
+    def __init__(
+        self,
         config: SelectedChartConfig,
-    ) -> list:
-        presets = []
-        if len(config.dimensions) == 1 and len(config.measures) == 1:
-            dimension1 = config.dimensions[0]
-            measure1 = Presets._set_aggregator(
-                config.measures[0], config.aggregators[0]
-            )
-            presets = D1M1.get(dimension1, measure1)
-        elif len(config.dimensions) == 1 and len(config.measures) == 2:
-            dimension1 = config.dimensions[0]
-            measure1 = Presets._set_aggregator(
-                config.measures[0], config.aggregators[0]
-            )
-            measure2 = Presets._set_aggregator(
-                config.measures[1], config.aggregators[1]
-            )
-            presets = D1M2.get(dimension1, measure1, measure2)
-        elif len(config.dimensions) == 2 and len(config.measures) == 1:
-            dimension1 = config.dimensions[0]
-            dimension2 = config.dimensions[1]
-            measure1 = Presets._set_aggregator(
-                config.measures[0], config.aggregators[0]
-            )
-            presets = D2M1.get(dimension1, dimension2, measure1)
-        elif len(config.dimensions) == 2 and len(config.measures) == 2:
-            dimension1 = config.dimensions[0]
-            dimension2 = config.dimensions[1]
-            measure1 = Presets._set_aggregator(
-                config.measures[0], config.aggregators[0]
-            )
-            measure2 = Presets._set_aggregator(
-                config.measures[1], config.aggregators[1]
-            )
-            presets = D2M2.get(dimension1, dimension2, measure1, measure2)
-        label = Presets._get_label(config)
-        presets = Presets._set_labels(presets, label)
-        return presets
+    ) -> None:
+        self._config = config
+        self._charts: list = []
+        self._set_charts()
 
-    @staticmethod
-    def _get_label(config: SelectedChartConfig) -> str | None:
-        new_label: str | None = config.label
+    @property
+    def charts(self) -> list:
+        return self._charts
+
+    def _set_charts(self) -> None:
+        if len(self._config.dimensions) == 1 and len(self._config.measures) == 1:
+            dimension1 = self._config.dimensions[0]
+            measure1 = Presets._set_aggregator(
+                self._config.measures[0], self._config.aggregators[0]
+            )
+            self._charts = D1M1.get(dimension1, measure1)
+        elif len(self._config.dimensions) == 1 and len(self._config.measures) == 2:
+            dimension1 = self._config.dimensions[0]
+            measure1 = Presets._set_aggregator(
+                self._config.measures[0], self._config.aggregators[0]
+            )
+            measure2 = Presets._set_aggregator(
+                self._config.measures[1], self._config.aggregators[1]
+            )
+            self._charts = D1M2.get(dimension1, measure1, measure2)
+        elif len(self._config.dimensions) == 2 and len(self._config.measures) == 1:
+            dimension1 = self._config.dimensions[0]
+            dimension2 = self._config.dimensions[1]
+            measure1 = Presets._set_aggregator(
+                self._config.measures[0], self._config.aggregators[0]
+            )
+            self._charts = D2M1.get(dimension1, dimension2, measure1)
+        elif len(self._config.dimensions) == 2 and len(self._config.measures) == 2:
+            dimension1 = self._config.dimensions[0]
+            dimension2 = self._config.dimensions[1]
+            measure1 = Presets._set_aggregator(
+                self._config.measures[0], self._config.aggregators[0]
+            )
+            measure2 = Presets._set_aggregator(
+                self._config.measures[1], self._config.aggregators[1]
+            )
+            self._charts = D2M2.get(dimension1, dimension2, measure1, measure2)
+
+        self._set_labels()
+        self._set_sorts()
+
+    def _set_labels(self) -> None:
+        label = self._get_label()
+        for index, _ in enumerate(self._charts):
+            self._charts[index]["config"]["label"] = label
+
+    def _get_label(self) -> str | None:
+        new_label: str | None = self._config.label
         if new_label == UNSET:
             new_label = None
-        elif new_label == config.measures[0]:
-            new_label = Presets._set_aggregator(new_label, config.aggregators[0])
-        elif new_label == config.measures[1]:
-            new_label = Presets._set_aggregator(new_label, config.aggregators[1])
+        elif len(self._config.measures) > 1 and new_label == self._config.measures[0]:
+            new_label = Presets._set_aggregator(new_label, self._config.aggregators[0])
+        elif len(self._config.measures) > 2 and new_label == self._config.measures[1]:
+            new_label = Presets._set_aggregator(new_label, self._config.aggregators[1])
         return new_label
 
-    @staticmethod
-    def _set_labels(presets: list, label: str | None) -> list:
-        for index, _ in enumerate(presets):
-            presets[index]["config"]["label"] = label
-        return presets
+    def _set_sorts(self) -> None:
+        sort = self._get_sort()
+        for index, _ in enumerate(self._charts):
+            self._charts[index]["config"]["sort"] = sort
+
+    def _get_sort(self) -> str:
+        if self._config.sort:
+            return "byValue"
+        return "none"
 
     @staticmethod
     def _set_aggregator(measure: str, aggregator: str) -> str:
