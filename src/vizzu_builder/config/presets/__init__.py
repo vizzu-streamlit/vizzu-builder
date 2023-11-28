@@ -85,9 +85,9 @@ class Presets:
         new_label: str | None = self._config.label
         if new_label == UNSET:
             new_label = None
-        elif len(self._config.measures) > 1 and new_label == self._config.measures[0]:
+        elif len(self._config.measures) > 0 and new_label == self._config.measures[0]:
             new_label = Presets._set_aggregator(new_label, self._config.aggregators[0])
-        elif len(self._config.measures) > 2 and new_label == self._config.measures[1]:
+        elif len(self._config.measures) > 1 and new_label == self._config.measures[1]:
             new_label = Presets._set_aggregator(new_label, self._config.aggregators[1])
         return new_label
 
