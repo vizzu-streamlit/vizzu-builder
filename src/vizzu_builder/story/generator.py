@@ -23,8 +23,8 @@ class StoryGenerator:
             st.session_state["BuilderStory"] = StoryConfig(self._data)
         self._story = st.session_state["BuilderStory"]
 
-        self._width = 640
-        self._height = 320
+        self._width = "100%"
+        self._height = 480
         self._start_slide = -1
         if not self._data.df.empty:
             if self._story.data.df.empty:
@@ -43,7 +43,7 @@ class StoryGenerator:
     def set_start_slide(self, index: int) -> None:
         self._story.story.start_slide = index
 
-    def set_size(self, width: int, height: int) -> None:
+    def set_size(self, width: str | int, height: int) -> None:
         self._story.story.set_size(width, height)
 
     def add_slide(self, preset: Preset) -> None:
@@ -61,9 +61,20 @@ class StoryGenerator:
 
     def play(self) -> None:
         if self._story.story is not None and self._story.story["slides"]:
+            width_template = (
+                '<div style="width:{}%;display:inline-block;box-sizing:border-box;">'
+            )
+            mid_width = 70
+            left_width = (100 - mid_width) / 2
+            left = f"{width_template.format(left_width)}</div>"
+            mid = self._story.story.to_html().strip()
+            if mid.startswith("<div>"):
+                mid = mid.replace(
+                    "<div>", f"{width_template.format(mid_width)}<div>", 1
+                )
             st.subheader("Story")
             self._story.story.set_feature("tooltip", self._get_tooltip())
-            self._story.story.play()
+            st.components.v1.html("".join([left, mid]), height=500)
             rows = row(2)
             self._add_delete_button(rows)
             self._add_download_button(rows)
@@ -118,7 +129,7 @@ class StoryGenerator:
             code.append("from ipyvizzustory import Story, Slide, Step")
             code += DataGenerator.get(self._data)
             code.append("story = Story(data)")
-            code.append(f"story.set_size({self._width}, {self._height})")
+            code.append("story.set_size(640, 480)")
             code.append(f'story.set_feature("tooltip", {self._get_tooltip()})\n')
             unformatted_code = "\n".join(code + self._story.code + ["\nstory.play()"])
             formatted_code = black.format_str(unformatted_code, mode=black.FileMode())
