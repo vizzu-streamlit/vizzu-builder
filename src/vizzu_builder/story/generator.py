@@ -17,15 +17,18 @@ from .configurator import StoryConfig
 
 
 class StoryGenerator:
+    SIZE = ("100%", 480)
+    PYTHON_SIZE = (640, 480)
+    HTML_SIZE = ("100%", "100%")
+
+    START_SLIDE = -1
+    HTML_START_SLIDE = 0
+
     def __init__(self) -> None:
         self._data = st.session_state.get("BuilderData", DataConfig())
         if "BuilderStory" not in st.session_state:
             st.session_state["BuilderStory"] = StoryConfig(self._data)
         self._story = st.session_state["BuilderStory"]
-
-        self._width = "100%"
-        self._height = 480
-        self._start_slide = -1
         if not self._data.df.empty:
             if self._story.data.df.empty:
                 self._story.data = self._data
@@ -36,14 +39,14 @@ class StoryGenerator:
                 data = Data()
                 data.add_df(self._data.df)
                 self._story.story = Story(data=data)
-                self.set_size(self._width, self._height)
-                self.set_start_slide(self._start_slide)
+                self.set_size(self.SIZE[0], self.SIZE[1])
+                self.set_start_slide(self.START_SLIDE)
                 self._story.code = []
 
     def set_start_slide(self, index: int) -> None:
         self._story.story.start_slide = index
 
-    def set_size(self, width: str | int, height: int) -> None:
+    def set_size(self, width: str | int, height: str | int) -> None:
         self._story.story.set_size(width, height)
 
     def add_slide(self, preset: Preset) -> None:
@@ -102,7 +105,8 @@ class StoryGenerator:
 
     def _add_download_button(self, rows) -> None:  # type: ignore
         if self._story.story is not None:
-            self.set_start_slide(0)
+            self.set_size(self.HTML_SIZE[0], self.HTML_SIZE[1])
+            self.set_start_slide(self.HTML_START_SLIDE)
             rows.download_button(
                 label="Download Story",
                 data=self._story.story.to_html(),
@@ -110,7 +114,8 @@ class StoryGenerator:
                 mime="text/html",
                 use_container_width=True,
             )
-            self.set_start_slide(self._start_slide)
+            self.set_size(self.SIZE[0], self.SIZE[1])
+            self.set_start_slide(self.START_SLIDE)
 
     def _add_show_code_button(self) -> None:
         if self._story.story is not None and self._story.code:
@@ -129,7 +134,7 @@ class StoryGenerator:
             code.append("from ipyvizzustory import Story, Slide, Step")
             code += DataGenerator.get(self._data)
             code.append("story = Story(data)")
-            code.append("story.set_size(640, 480)")
+            code.append(f"story.set_size({self.PYTHON_SIZE[0]}, {self.PYTHON_SIZE[1]})")
             code.append(f'story.set_feature("tooltip", {self._get_tooltip()})\n')
             unformatted_code = "\n".join(code + self._story.code + ["\nstory.play()"])
             formatted_code = black.format_str(unformatted_code, mode=black.FileMode())
