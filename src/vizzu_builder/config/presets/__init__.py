@@ -2,26 +2,48 @@
 
 from __future__ import annotations
 
+import streamlit as st
 import streamlit_vizzu  # type: ignore
 
 from .d1m1 import D1M1
 from .d1m2 import D1M2
 from .d2m1 import D2M1
 from .d2m2 import D2M2
+from .palettes import DEFAULT, PALETTES
 from ..unset import UNSET
+from ...data.parser import DataParser
 from ...chart.configurator import SelectedChartConfig
 
 
 class Preset:
     # pylint: disable=too-few-public-methods
 
-    def __init__(self, data: streamlit_vizzu.Data, presets: list, index: int) -> None:
+    def __init__(
+        self,
+        data: streamlit_vizzu.Data,
+        colors: dict[str, int],
+        preset: dict,
+        index: int,
+    ) -> None:
+        self._colors: dict[str, int] = colors
         self.index: int = index
         self.data: streamlit_vizzu.Data = data
-        preset = presets[index]
+        self.types: dict = preset["types"]
+        self.chart: str = preset["chart"]
         self.config: dict = preset["config"]
         self.style: dict = preset["style"]
-        self.chart: str = preset["chart"]
+        self._set_color_palette()
+
+    def _set_color_palette(self) -> None:
+        color = self.config["color"]
+        if color is None or self.types[color] != DataParser.DIMENSION:
+            self.style["plot"]["marker"]["colorPalette"] = DEFAULT
+        else:
+            if color not in self._colors:
+                self._colors[color] = len(self._colors) % len(PALETTES)
+            self.style["plot"]["marker"]["colorPalette"] = " ".join(
+                PALETTES[self._colors[color]]
+            )
 
 
 class Presets:

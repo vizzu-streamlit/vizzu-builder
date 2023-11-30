@@ -12,5 +12,6 @@ from ..data.configurator import DataConfig
 @dataclass
 class StoryConfig:
     data: DataConfig | None = None
+    colors: dict[str, int] = field(default_factory=lambda: {})
     code: list[str] = field(default_factory=list)
     story: Story | None = None
