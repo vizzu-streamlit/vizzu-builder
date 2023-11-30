@@ -35,24 +35,25 @@ class ChartGenerator:
             data = streamlit_vizzu.Data()
             data.add_df(self._data.df)
             data.set_filter(self._data.filters)
+            colors = self._story_generator.story.colors
             for index in range(0, len(charts), 3):
                 col0, col1, col2 = st.columns(3)
 
                 index0 = index
                 with col0:
-                    preset0 = Preset(data, charts, index0)
+                    preset0 = Preset(data, colors, charts[index0], index0)
                     self._add_chart(preset0)
 
                 index1 = index + 1
                 if index1 < len(charts):
                     with col1:
-                        preset1 = Preset(data, charts, index1)
+                        preset1 = Preset(data, colors, charts[index1], index1)
                         self._add_chart(preset1)
 
                 index2 = index + 2
                 if index2 < len(charts):
                     with col2:
-                        preset2 = Preset(data, charts, index2)
+                        preset2 = Preset(data, colors, charts[index2], index2)
                         self._add_chart(preset2)
         st.divider()
 

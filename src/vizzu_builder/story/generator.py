@@ -36,12 +36,17 @@ class StoryGenerator:
                 self._data.df
             ):
                 self._story.data = self._data
+                self._story.colors = {}
                 data = Data()
                 data.add_df(self._data.df)
                 self._story.story = Story(data=data)
                 self.set_size(self.SIZE[0], self.SIZE[1])
                 self.set_start_slide(self.START_SLIDE)
                 self._story.code = []
+
+    @property
+    def story(self) -> StoryConfig:
+        return self._story  # type: ignore
 
     def set_start_slide(self, index: int) -> None:
         self._story.story.start_slide = index

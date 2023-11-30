@@ -24,7 +24,7 @@ class DataConfigurator:
     # pylint: disable=too-few-public-methods
 
     def __init__(self) -> None:
-        self._data = DataConfig(pd.DataFrame(), None, None)
+        self._data = DataConfig()
         if "BuilderData" not in st.session_state:
             st.session_state["BuilderData"] = self._data
 

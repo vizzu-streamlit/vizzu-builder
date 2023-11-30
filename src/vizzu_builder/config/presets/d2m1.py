@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from .style import Style
+from ...data.parser import DataParser
 
 
 class D2M1:
@@ -10,7 +11,7 @@ class D2M1:
 
     @staticmethod
     def get(dimension1: str, dimension2: str, measure1: str) -> list:
-        return [
+        charts: list[dict] = [
             {
                 "config": {
                     "coordSystem": "cartesian",
@@ -439,3 +440,9 @@ class D2M1:
                 "chart": "Heat Map Gradient",
             },
         ]
+        for chart in charts:
+            chart["types"] = {}
+            chart["types"][dimension1] = DataParser.DIMENSION
+            chart["types"][dimension2] = DataParser.DIMENSION
+            chart["types"][measure1] = DataParser.MEASURE
+        return charts
