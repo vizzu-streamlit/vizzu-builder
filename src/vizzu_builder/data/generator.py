@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from pathlib import Path
 
 from .configurator import DataConfig
 
@@ -22,7 +21,7 @@ class DataGenerator:
             else:
                 d_types.append(f'"{column}": float')
         code.append(f'd_types={{{", ".join(d_types)}}}')
-        code.append(f'df = pd.read_csv("{Path(config.csv_file).name}", dtype=d_types)')
+        code.append(f'df = pd.read_csv("{config.csv_file.name}", dtype=d_types)')
         code.append("data = Data()")
         code.append("data.add_df(df)\n")
         return code
