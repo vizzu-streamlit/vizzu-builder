@@ -12,8 +12,13 @@ class ChartUpdater:
     # pylint: disable=too-few-public-methods
 
     def __init__(self, data: DataConfig, config: SelectedChartConfig) -> None:
+        button_label = (
+            "Create Charts"
+            if "BuilderConfig" not in st.session_state
+            else "Update Charts"
+        )
         if not data.df.empty:
-            if st.button("Update Charts"):
+            if st.button(button_label):
                 st.session_state["BuilderData"] = data
                 st.session_state["BuilderConfig"] = config
             st.divider()

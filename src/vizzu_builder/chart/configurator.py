@@ -74,6 +74,10 @@ class ChartConfigurator:
     def _add_title(self) -> None:
         self._container.subheader("Configure Chart")
 
+        self._container.write(
+            "Choose which data you want to be displayed in the charts"
+        )
+
     def _add_buttons(self) -> None:
         add_methods = [
             [self._add_dimension_button],

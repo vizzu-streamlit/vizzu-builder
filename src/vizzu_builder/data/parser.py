@@ -34,7 +34,15 @@ class DataParser:
         return self._df
 
     def _add_title(self) -> None:
-        st.subheader("Configure Data")
+        st.subheader("Step 2: Configure Data")
+
+        st.write(
+            """
+            Specify which columns should be treated as values and which ones should
+            be treated as categories, and optionally filter the data.
+            You must select at least 1 value column and 1 category column.
+            """
+        )
 
     def _read_csv_file(self, csv_file: Path) -> None:
         dtype = {}
