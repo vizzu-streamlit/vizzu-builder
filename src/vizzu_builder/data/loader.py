@@ -26,7 +26,12 @@ class CsvFileUploader:
         return None
 
     def _add_title(self) -> None:
-        st.subheader("Upload Data")
+        st.subheader("Step 1: Upload Data")
+
+        st.write(
+            "Upload a csv under 5MB that you would like to use to build charts, or use "
+            "sample data."
+        )
 
     def _add_upload_button(self) -> None:
         self._csv_file = st.file_uploader("Upload a CSV file", type=["csv"])  # type: ignore

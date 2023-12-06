@@ -74,6 +74,14 @@ class ChartConfigurator:
     def _add_title(self) -> None:
         self._container.subheader("Configure Chart")
 
+        self._container.write(
+            """
+            Choose which data you want to be displayed in the charts. See
+            the [documentation](https://lib.vizzuhq.com/0.3.0/#chapter-0.1) for more
+            details about how Vizzu handles different kinds of data.
+            """
+        )
+
     def _add_buttons(self) -> None:
         add_methods = [
             [self._add_dimension_button],
