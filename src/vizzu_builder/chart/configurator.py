@@ -72,12 +72,13 @@ class ChartConfigurator:
         return self._selected_config
 
     def _add_title(self) -> None:
-        self._container.subheader("Configure Chart")
+        self._container.subheader("Step 3: Configure Chart")
 
         self._container.write(
             """
-            Choose which data you want to be displayed in the charts. See
-            the [documentation](https://lib.vizzuhq.com/0.3.0/#chapter-0.1) for more
+            Choose which data you want to be displayed in the charts.
+            You must select at least 1 value column and 1 category column. See
+            the [documentation](https://ipyvizzu.vizzuhq.com/0.16/tutorial/data/) for more
             details about how Vizzu handles different kinds of data.
             """
         )

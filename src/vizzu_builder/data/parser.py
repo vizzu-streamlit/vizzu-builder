@@ -40,7 +40,6 @@ class DataParser:
             """
             Specify which columns should be treated as values and which ones should
             be treated as categories, and optionally filter the data.
-            You must select at least 1 value column and 1 category column.
             """
         )
 
