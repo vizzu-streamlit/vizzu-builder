@@ -35,21 +35,19 @@ virtual environment and install `pdm` within it.
 ```sh
 python3.10 -m venv ".venv"
 source .venv/bin/activate
-pip install pdm==2.10.2
+pip install pdm==2.11.0
 ```
 
-Once set up, you can utilize the pre-defined `pdm` scripts. For example, you can
-initialize the entire development environment using the command
-`pdm run install`.
+Once set up, you can install development dependencies:
 
 ```sh
-pdm run install
+pdm install
 ```
-
-**Note:** For all available `pdm` scripts, run `pdm run --list`.
 
 The development requirements are installed based on the `pdm.lock` file. To
 update the development requirements, you can use the command `pdm run lock`.
+
+**Note:** For all available `pdm` scripts, run `pdm run --list`.
 
 ### CI
 
@@ -70,10 +68,10 @@ You can check the code's formatting using the `format` script:
 pdm run format
 ```
 
-If you need to fix any formatting issues, you can use the `format-fix` script:
+If you need to fix any formatting issues, you can use the `fix-format` script:
 
 ```sh
-pdm run format-fix
+pdm run fix-format
 ```
 
 #### Code analyses
