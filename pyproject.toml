@@ -73,6 +73,8 @@ type-mypy = "mypy --strict"
 
 ci = {composite = ["format", "lint", "type"]}
 
+fix = {composite = ["fix-format"]}
+
 fix-format = {composite = ["fix-format-black src tools", "fix-format-mdformat README.md CONTRIBUTING.md CODE_OF_CONDUCT.md"]}
 fix-format-black = "black"
 fix-format-mdformat = "python ./tools/ci/std_check.py mdformat --wrap 80 --end-of-line keep --line-length 70"
