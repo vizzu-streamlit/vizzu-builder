@@ -15,15 +15,11 @@ Documentation = "https://github.com/vizzu-streamlit/vizzu-builder"
 Source = "https://github.com/vizzu-streamlit/vizzu-builder"
 Tracker = "https://github.com/vizzu-streamlit/vizzu-builder/issues"
 
-
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
 [tool.pdm.dev-dependencies]
-tools = [
-    "pdm",
-]
 app = [
     "ipyvizzu<=0.17.0",
     "ipyvizzu-story<=0.10.0",
@@ -64,22 +60,19 @@ disable_error_code = ["type-arg"]
 
 [tool.pdm.scripts]
 lock = "pdm lock -d"
-install = "pdm install"
 
-format-fix-black = "black"
+format = {composite = ["format-black app.py src tools", "format-mdformat README.md CONTRIBUTING.md CODE_OF_CONDUCT.md"]}
 format-black = "black --diff --check"
-format-fix-mdformat = "python ./tools/ci/std_check.py mdformat --wrap 80 --end-of-line keep --line-length 70"
 format-mdformat = "python ./tools/ci/std_check.py mdformat --wrap 80 --end-of-line keep --line-length 70 --check"
 
-format-fix = {composite = ["format-fix-black src tools", "format-fix-mdformat README.md CONTRIBUTING.md CODE_OF_CONDUCT.md"]}
-format = {composite = ["format-black app.py src tools", "format-mdformat README.md CONTRIBUTING.md CODE_OF_CONDUCT.md"]}
-
+lint = {composite = ["lint-pylint src tools"]}
 lint-pylint = "pylint"
 
-lint = {composite = ["lint-pylint src tools"]}
-
+type = {composite = ["type-mypy src tools"]}
 type-mypy = "mypy --strict"
 
-type = {composite = ["type-mypy src tools"]}
-
 ci = {composite = ["format", "lint", "type"]}
+
+fix-format = {composite = ["fix-format-black src tools", "fix-format-mdformat README.md CONTRIBUTING.md CODE_OF_CONDUCT.md"]}
+fix-format-black = "black"
+fix-format-mdformat = "python ./tools/ci/std_check.py mdformat --wrap 80 --end-of-line keep --line-length 70"
