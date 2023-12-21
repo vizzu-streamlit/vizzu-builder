@@ -29,7 +29,7 @@ class CsvFileUploader:
         st.subheader("Step 1: Upload Data")
 
         st.write(
-            "Upload a csv under 5MB that you would like to use to build charts, or use "
+            "Upload a CSV under 5MB that you would like to use to build charts and stories, or use "
             "sample data."
         )
 

@@ -33,6 +33,23 @@ class D1M1:
                 "config": {
                     "coordSystem": "cartesian",
                     "geometry": "rectangle",
+                    "x": dimension1,
+                    "y": {"set": measure1, "range": {"min": None, "max": "110%"}},
+                    "color": dimension1,
+                    "lightness": None,
+                    "size": None,
+                    "noop": None,
+                    "split": False,
+                    "align": "none",
+                    "orientation": "horizontal",
+                },
+                "style": Style.style(),
+                "chart": "Column Chart V2",
+            },
+            {
+                "config": {
+                    "coordSystem": "cartesian",
+                    "geometry": "rectangle",
                     "x": measure1,
                     "y": {"set": dimension1, "range": {"min": None, "max": None}},
                     "color": None,
@@ -45,6 +62,23 @@ class D1M1:
                 },
                 "style": Style.style(),
                 "chart": "Bar Chart",
+            },
+            {
+                "config": {
+                    "coordSystem": "cartesian",
+                    "geometry": "rectangle",
+                    "x": measure1,
+                    "y": {"set": dimension1, "range": {"min": None, "max": None}},
+                    "color": dimension1,
+                    "lightness": None,
+                    "size": None,
+                    "noop": None,
+                    "split": False,
+                    "align": "none",
+                    "orientation": "vertical",
+                },
+                "style": Style.style(),
+                "chart": "Bar Chart V2",
             },
             {
                 "config": {

@@ -1,2 +1,4 @@
 [server]
 maxUploadSize = 5
+[theme]
+base="light"
