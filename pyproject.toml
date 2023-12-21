@@ -21,8 +21,8 @@ build-backend = "pdm.backend"
 
 [tool.pdm.dev-dependencies]
 app = [
-    "ipyvizzu<=0.17.0",
-    "ipyvizzu-story<=0.10.0",
+    "ipyvizzu<=0.18.0",
+    "ipyvizzu-story<=0.11.0",
     "streamlit-vizzu<=0.2.0",
     "black",
     "pandas",
