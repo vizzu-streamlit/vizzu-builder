@@ -133,6 +133,23 @@ class D1M1:
             },
             {
                 "config": {
+                    "coordSystem": "cartesian",
+                    "geometry": "circle",
+                    "x": {"set": measure1, "range": {"min": "auto", "max": "110%"}},
+                    "y": dimension1,
+                    "color": dimension1,
+                    "lightness": None,
+                    "size": None,
+                    "noop": None,
+                    "split": False,
+                    "align": "none",
+                    "orientation": "horizontal",
+                },
+                "style": Style.style_lollipop(),
+                "chart": "Horizontal Lollipop",
+            },
+            {
+                "config": {
                     "coordSystem": "polar",
                     "geometry": "rectangle",
                     "x": dimension1,
