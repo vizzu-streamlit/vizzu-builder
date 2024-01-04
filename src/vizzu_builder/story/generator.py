@@ -94,7 +94,7 @@ class StoryGenerator:
     def _add_delete_button(self, rows) -> None:  # type: ignore
         if self._story.story is not None and self._story.story["slides"]:
             rows.button(
-                "Delete last Slide",
+                "Delete Last Slide",
                 use_container_width=True,
                 on_click=self._delete_last_slide,
             )
@@ -124,7 +124,7 @@ class StoryGenerator:
 
     def _add_show_code_button(self) -> None:
         if self._story.story is not None and self._story.code:
-            show_code = st.expander("Show code")
+            show_code = st.expander("Show Code")
             with show_code:
                 st.code(
                     self._get_code(),

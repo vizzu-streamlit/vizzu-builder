@@ -120,7 +120,7 @@ class D1M1:
                     "geometry": "circle",
                     "x": dimension1,
                     "y": {"set": measure1, "range": {"min": "auto", "max": "110%"}},
-                    "color": None,
+                    "color": dimension1,
                     "lightness": None,
                     "size": None,
                     "noop": None,
