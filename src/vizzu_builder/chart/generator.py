@@ -85,7 +85,7 @@ class ChartGenerator:
         chart.show()
 
     def _add_chart_code(self, preset: Preset) -> None:
-        show_code = st.expander("Show code")
+        show_code = st.expander("Show Code")
         with show_code:
             code = []
             code.append("from streamlit_vizzu import VizzuChart, Data, Config, Style")

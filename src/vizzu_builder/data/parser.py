@@ -83,7 +83,7 @@ class DataParser:
             self._convert_column(column_name, selected_type)
 
     def _add_data(self) -> None:
-        with st.expander("Show data"):
+        with st.expander("Show Data"):
             max_rows = len(self._df)
             num_rows = st.slider(
                 "Number of rows to show",
