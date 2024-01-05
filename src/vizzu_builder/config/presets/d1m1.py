@@ -143,7 +143,7 @@ class D1M1:
                     "noop": None,
                     "split": False,
                     "align": "none",
-                    "orientation": "horizontal",
+                    "orientation": "vertical",
                 },
                 "style": Style.style_lollipop(),
                 "chart": "Horizontal Lollipop",
